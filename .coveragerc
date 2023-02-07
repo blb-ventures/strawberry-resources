@@ -1,0 +1,14 @@
+[run]
+source = strawberry_django_plus
+omit = .venv/**,tests/migrations/**,manage.py,strawberry_django_plus/middlewares/debug_toolbar.py,strawberry_django_plus/test/client.py
+
+[report]
+precision = 2
+exclude_lines =
+    pragma: nocover
+    pragma:nocover
+    if TYPE_CHECKING:
+    @overload
+    @abstractmethod
+    @abc.abstractmethod
+    assert_never
