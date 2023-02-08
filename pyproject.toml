@@ -40,12 +40,15 @@ strawberry-graphql-django = "^0.8"
 strawberry-django-plus = "^2.0"
 django = "^3.2"
 django-choices-field = "^2.0"
+django-types = "^0.16.0"
+django-phonenumber-field = "^7.0.0"
 codecov = "^2.1.12"
 pytest = "^7.1.2"
 pytest-cov = "^4.0.0"
 ipython = "^8.4.0"
 pytest-asyncio = "^0.20.1"
 ruff = "^0.0.243"
+pytest-django = "^4.5.2"
 
 [tool.poetry.extras]
 django = ["django", "strawberry-graphql-django"]
@@ -168,10 +171,11 @@ strictListInference = true
 strictSetInference = true
 
 [tool.pytest.ini_options]
-DJANGO_SETTINGS_MODULE = "demo.settings"
 python_files = "tests/test_*.py"
-addopts = "-p no:warnings --nomigrations --cov=./ --cov-report term-missing:skip-covered"
+DJANGO_SETTINGS_MODULE = "tests.django_settings"
+addopts = "-p no:warnings --cov=./ --cov-report term-missing:skip-covered"
 asyncio_mode = "auto"
+testpaths = ["tests/"]
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
