@@ -33,13 +33,20 @@ def get_all() -> List[StrawberryResourceIntegration]:
         for module in pathlib.Path(__file__).parent.iterdir():
             if (
                 not module.is_file()
-                or module.name == "__init.py"
+                or module.name in ["__init__.py", "base.py"]
                 or not module.name.endswith(".py")
             ):
                 continue
 
             with contextlib.suppress(Exception):
-                __import__(module.name[:-3], locals(), globals())
+                mod = __import__(
+                    f"strawberry_resources.integrations.{module.name[:-3]}",
+                    locals(),
+                    globals(),
+                    fromlist=["integration"],
+                )
+                if not isinstance(mod.integration, StrawberryResourceIntegration):
+                    raise ValueError
 
         _integrations_imported = True
 

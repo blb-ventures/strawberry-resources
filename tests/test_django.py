@@ -3,14 +3,11 @@ from strawberry.tools import merge_types
 from strawberry_django_plus import gql
 from typing_extensions import Annotated
 
-from strawberry_resources.integrations import django
 from strawberry_resources.queries import Query as _Query
 from strawberry_resources.types import config
 from tests.app.models import Person, Role
 
 from .utils import resource_query
-
-assert django
 
 
 @gql.django.type(Role)

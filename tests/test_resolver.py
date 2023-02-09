@@ -83,7 +83,6 @@ def test_resource():
 
     resource = get_resource_by_name(schema, "SomeType")
     assert resource == expected
-    print(get_resource_by_name(schema, "Query"))
     assert get_resource_by_name(schema, "Query") == Resource(
         name="Query",
         fields=[
@@ -145,7 +144,6 @@ def test_resourcea_with_annotations():
 
     resource = get_resource_by_name(schema, "SomeType")
     assert resource == expected
-    print(get_resource_by_name(schema, "Query"))
     assert get_resource_by_name(schema, "Query") == Resource(
         name="Query",
         fields=[
