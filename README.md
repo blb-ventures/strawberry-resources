@@ -5,7 +5,6 @@
 [![downloads](https://pepy.tech/badge/strawberry-resources)](https://pepy.tech/project/strawberry-resources)
 [![PyPI version](https://img.shields.io/pypi/v/strawberry-resources.svg)](https://pypi.org/project/strawberry-resources/)
 ![python version](https://img.shields.io/pypi/pyversions/strawberry-resources.svg)
-![django version](https://img.shields.io/pypi/djversions/strawberry-resources.svg)
 
 Introspection utilities to extract data from the schema to use as helpers in the
 client, like building an automatic form for input types.
