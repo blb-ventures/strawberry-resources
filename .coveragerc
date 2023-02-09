@@ -1,6 +1,6 @@
 [run]
-source = strawberry_django_plus
-omit = .venv/**,tests/app/urls.py
+source = strawberry_resources
+omit = .venv/**,tests/app/urls.py,strawberry_resources/__main__.py,strawberry_resources/cli/**
 
 [report]
 precision = 2
