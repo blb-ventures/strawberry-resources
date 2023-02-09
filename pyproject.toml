@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "strawberry-resources"
 version = "0.1.0"
-description = "Introspection utilities to extract data for forms"
+description = "Introspection utilities to extract data from strawberry graphql"
 authors = ["Thiago Bellini Ribeiro <thiago@bellini.dev>"]
 license = "MIT"
 readme = "README.md"
