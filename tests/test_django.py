@@ -40,7 +40,7 @@ class Query:
 @strawberry.type
 class Mutation:
     @gql.django.mutation
-    def create_person(self, input: PersonInput) -> PersonType:
+    def create_person(self, input: PersonInput) -> PersonType:  # noqa: A002
         ...
 
 

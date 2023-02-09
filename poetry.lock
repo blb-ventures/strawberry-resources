@@ -77,6 +77,35 @@ files = [
 ]
 
 [[package]]
+name = "backports-zoneinfo"
+version = "0.2.1"
+description = "Backport of the standard library zoneinfo module"
+category = "main"
+optional = false
+python-versions = ">=3.6"
+files = [
+    {file = "backports.zoneinfo-0.2.1-cp36-cp36m-macosx_10_14_x86_64.whl", hash = "sha256:da6013fd84a690242c310d77ddb8441a559e9cb3d3d59ebac9aca1a57b2e18bc"},
+    {file = "backports.zoneinfo-0.2.1-cp36-cp36m-manylinux1_i686.whl", hash = "sha256:89a48c0d158a3cc3f654da4c2de1ceba85263fafb861b98b59040a5086259722"},
+    {file = "backports.zoneinfo-0.2.1-cp36-cp36m-manylinux1_x86_64.whl", hash = "sha256:1c5742112073a563c81f786e77514969acb58649bcdf6cdf0b4ed31a348d4546"},
+    {file = "backports.zoneinfo-0.2.1-cp36-cp36m-win32.whl", hash = "sha256:e8236383a20872c0cdf5a62b554b27538db7fa1bbec52429d8d106effbaeca08"},
+    {file = "backports.zoneinfo-0.2.1-cp36-cp36m-win_amd64.whl", hash = "sha256:8439c030a11780786a2002261569bdf362264f605dfa4d65090b64b05c9f79a7"},
+    {file = "backports.zoneinfo-0.2.1-cp37-cp37m-macosx_10_14_x86_64.whl", hash = "sha256:f04e857b59d9d1ccc39ce2da1021d196e47234873820cbeaad210724b1ee28ac"},
+    {file = "backports.zoneinfo-0.2.1-cp37-cp37m-manylinux1_i686.whl", hash = "sha256:17746bd546106fa389c51dbea67c8b7c8f0d14b5526a579ca6ccf5ed72c526cf"},
+    {file = "backports.zoneinfo-0.2.1-cp37-cp37m-manylinux1_x86_64.whl", hash = "sha256:5c144945a7752ca544b4b78c8c41544cdfaf9786f25fe5ffb10e838e19a27570"},
+    {file = "backports.zoneinfo-0.2.1-cp37-cp37m-win32.whl", hash = "sha256:e55b384612d93be96506932a786bbcde5a2db7a9e6a4bb4bffe8b733f5b9036b"},
+    {file = "backports.zoneinfo-0.2.1-cp37-cp37m-win_amd64.whl", hash = "sha256:a76b38c52400b762e48131494ba26be363491ac4f9a04c1b7e92483d169f6582"},
+    {file = "backports.zoneinfo-0.2.1-cp38-cp38-macosx_10_14_x86_64.whl", hash = "sha256:8961c0f32cd0336fb8e8ead11a1f8cd99ec07145ec2931122faaac1c8f7fd987"},
+    {file = "backports.zoneinfo-0.2.1-cp38-cp38-manylinux1_i686.whl", hash = "sha256:e81b76cace8eda1fca50e345242ba977f9be6ae3945af8d46326d776b4cf78d1"},
+    {file = "backports.zoneinfo-0.2.1-cp38-cp38-manylinux1_x86_64.whl", hash = "sha256:7b0a64cda4145548fed9efc10322770f929b944ce5cee6c0dfe0c87bf4c0c8c9"},
+    {file = "backports.zoneinfo-0.2.1-cp38-cp38-win32.whl", hash = "sha256:1b13e654a55cd45672cb54ed12148cd33628f672548f373963b0bff67b217328"},
+    {file = "backports.zoneinfo-0.2.1-cp38-cp38-win_amd64.whl", hash = "sha256:4a0f800587060bf8880f954dbef70de6c11bbe59c673c3d818921f042f9954a6"},
+    {file = "backports.zoneinfo-0.2.1.tar.gz", hash = "sha256:fadbfe37f74051d024037f223b8e001611eac868b5c5b06144ef4d8b799862f2"},
+]
+
+[package.extras]
+tzdata = ["tzdata"]
+
+[[package]]
 name = "black"
 version = "23.1.0"
 description = "The uncompromising code formatter."
@@ -360,20 +389,21 @@ files = [
 
 [[package]]
 name = "django"
-version = "3.2.17"
-description = "A high-level Python Web framework that encourages rapid development and clean, pragmatic design."
+version = "4.1.6"
+description = "A high-level Python web framework that encourages rapid development and clean, pragmatic design."
 category = "main"
 optional = false
-python-versions = ">=3.6"
+python-versions = ">=3.8"
 files = [
-    {file = "Django-3.2.17-py3-none-any.whl", hash = "sha256:59c39fc342b242fb42b6b040ad8b1b4c15df438706c1d970d416d63cdd73e7fd"},
-    {file = "Django-3.2.17.tar.gz", hash = "sha256:644288341f06ebe4938eec6801b6bd59a6534a78e4aedde2a153075d11143894"},
+    {file = "Django-4.1.6-py3-none-any.whl", hash = "sha256:c6fe7ebe7c017fe59f1029821dae0acb5a2ddcd6c9a0138fd20a8bfefac914bc"},
+    {file = "Django-4.1.6.tar.gz", hash = "sha256:bceb0fe1a386781af0788cae4108622756cd05e7775448deec04a71ddf87685d"},
 ]
 
 [package.dependencies]
-asgiref = ">=3.3.2,<4"
-pytz = "*"
+asgiref = ">=3.5.2,<4"
+"backports.zoneinfo" = {version = "*", markers = "python_version < \"3.9\""}
 sqlparse = ">=0.2.2"
+tzdata = {version = "*", markers = "sys_platform == \"win32\""}
 
 [package.extras]
 argon2 = ["argon2-cffi (>=19.1.0)"]
@@ -827,18 +857,6 @@ files = [
 six = ">=1.5"
 
 [[package]]
-name = "pytz"
-version = "2022.7.1"
-description = "World timezone definitions, modern and historical"
-category = "main"
-optional = false
-python-versions = "*"
-files = [
-    {file = "pytz-2022.7.1-py2.py3-none-any.whl", hash = "sha256:78f4f37d8198e0627c5f1143240bb0206b8691d8d7ac6d78fee88b78733f8c4a"},
-    {file = "pytz-2022.7.1.tar.gz", hash = "sha256:01a0681c4b9684a28304615eba55d1ab31ae00bf68ec157ec3708a8182dbbcd0"},
-]
-
-[[package]]
 name = "requests"
 version = "2.28.2"
 description = "Python HTTP for Humans."
@@ -862,28 +880,28 @@ use-chardet-on-py3 = ["chardet (>=3.0.2,<6)"]
 
 [[package]]
 name = "ruff"
-version = "0.0.243"
+version = "0.0.244"
 description = "An extremely fast Python linter, written in Rust."
 category = "dev"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "ruff-0.0.243-py3-none-macosx_10_7_x86_64.whl", hash = "sha256:242571d79d3d7a1e441e88b0cf2814b24bfc4e3a073e5d82df81aa52ad829e4c"},
-    {file = "ruff-0.0.243-py3-none-macosx_10_9_x86_64.macosx_11_0_arm64.macosx_10_9_universal2.whl", hash = "sha256:4fd0ef0dddd7ccce6457cca556baf51504c11f7deaaa5944a47c5e0c6c3b1425"},
-    {file = "ruff-0.0.243-py3-none-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:a9e2e6632e2d07e6e7257a44592e0fade0d5df23004a3b180efd0d3bbb581a09"},
-    {file = "ruff-0.0.243-py3-none-manylinux_2_17_armv7l.manylinux2014_armv7l.whl", hash = "sha256:9a70c7810453f6c5120887fc22fcbcf8a4987e767f45270a9aad5e6e9b0a26ff"},
-    {file = "ruff-0.0.243-py3-none-manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:0cb8ef4a5cbb219ed344286b07795c0b88f277bc860207e0a6bce0fd8e4c5f8e"},
-    {file = "ruff-0.0.243-py3-none-manylinux_2_17_ppc64.manylinux2014_ppc64.whl", hash = "sha256:f75c11940cc6b374ba070b5dc154c85c2b8753d03cbb53f182438404bae52d31"},
-    {file = "ruff-0.0.243-py3-none-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl", hash = "sha256:919075726724d62b60caedd286317ca0c77cb67ba4291b9067feafdac2506872"},
-    {file = "ruff-0.0.243-py3-none-manylinux_2_17_s390x.manylinux2014_s390x.whl", hash = "sha256:a0f5bdb14a2a2f9a63f6f0979fb0501e426e2bd8e6499ade41e1311b379a4d92"},
-    {file = "ruff-0.0.243-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:b8ffdbf62d72db5ab5d3b51abe5b4dfb53cf3f330af7f57e0101f36ff7176449"},
-    {file = "ruff-0.0.243-py3-none-musllinux_1_2_aarch64.whl", hash = "sha256:081b70f1dd2d16d9f60079cf95215d9095ca16032c02118cfc88b0b53e406b9c"},
-    {file = "ruff-0.0.243-py3-none-musllinux_1_2_armv7l.whl", hash = "sha256:d8f1d26c0a3b51a4b5c493c29536112c61ec6ff7a66c5b673b2af37b7859d6f1"},
-    {file = "ruff-0.0.243-py3-none-musllinux_1_2_i686.whl", hash = "sha256:5f432e745f6b38e2a643ae9c05ae30345196a435a23d844b61a50d1808acba82"},
-    {file = "ruff-0.0.243-py3-none-musllinux_1_2_x86_64.whl", hash = "sha256:f38b6b6470b468271e283ecc7bc169465b3f3cdb6df199abe69aff0c3c17c756"},
-    {file = "ruff-0.0.243-py3-none-win32.whl", hash = "sha256:2707e2c32ace855afad3e06bddf2280d1fc15e303dea2de3ccd0e308a5b395ae"},
-    {file = "ruff-0.0.243-py3-none-win_amd64.whl", hash = "sha256:be44aff098fd424b9a9218eedef80d7125222ea86c3cd62e15f6f587455c99f3"},
-    {file = "ruff-0.0.243.tar.gz", hash = "sha256:d5847e75038b51801f45b31a93c3526114d3aac59acea3493bb06ebc7783b004"},
+    {file = "ruff-0.0.244-py3-none-macosx_10_7_x86_64.whl", hash = "sha256:5d65a0adffa51314cf9f1036c51dbcde0462b23b49a3d8e3a696a221f9f46f54"},
+    {file = "ruff-0.0.244-py3-none-macosx_10_9_x86_64.macosx_11_0_arm64.macosx_10_9_universal2.whl", hash = "sha256:3d6bf5094f2c447f5ff8d10c670dc1bc8b7f70cb5f4e43afe1d0624b934c1284"},
+    {file = "ruff-0.0.244-py3-none-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:c0f54790b297d5df8120a348c91426a0375c40f62880d30438e46922399b29bf"},
+    {file = "ruff-0.0.244-py3-none-manylinux_2_17_armv7l.manylinux2014_armv7l.whl", hash = "sha256:88e263e3d7267b4b10f5c1fc1446c5d6b47824c6d78e5c3a97ef79c83d9cb837"},
+    {file = "ruff-0.0.244-py3-none-manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:8044c79098e3f2deaf970ab468bf5661b193163369bfe5bbda636e6363aa7932"},
+    {file = "ruff-0.0.244-py3-none-manylinux_2_17_ppc64.manylinux2014_ppc64.whl", hash = "sha256:258e5e3386a8efdff9f253395cc03a3a88204442ac8db50aeb0a529e2862d57b"},
+    {file = "ruff-0.0.244-py3-none-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl", hash = "sha256:bd09c523aeed4d81f358093dc4df384a4db42ff5f9627c9506c26c2becbe19a7"},
+    {file = "ruff-0.0.244-py3-none-manylinux_2_17_s390x.manylinux2014_s390x.whl", hash = "sha256:c98f0d4a4e052e8b0e27b47e83563026d749b07a21a097780cd283c2f885ad3c"},
+    {file = "ruff-0.0.244-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:2359f840c95364d779b86a822fe025fa416eb14adc661c1263bc39e90065f0bd"},
+    {file = "ruff-0.0.244-py3-none-musllinux_1_2_aarch64.whl", hash = "sha256:8b85ced1e75b7cf1dd90d0708f8e46e2d58fc124334492cc5103f24d832a3922"},
+    {file = "ruff-0.0.244-py3-none-musllinux_1_2_armv7l.whl", hash = "sha256:9c2d49c2021bf80f3e66968c1a41f89061911ffb7ed1f0d39a3204a45fc97ba7"},
+    {file = "ruff-0.0.244-py3-none-musllinux_1_2_i686.whl", hash = "sha256:da77d573c7a5b27bad43468fb7e47e78e22715426beb4e673106d24a9a584838"},
+    {file = "ruff-0.0.244-py3-none-musllinux_1_2_x86_64.whl", hash = "sha256:9f16fc3380753310af2a10e2867dfc133849e51c545561ec0a389aa93b3058b0"},
+    {file = "ruff-0.0.244-py3-none-win32.whl", hash = "sha256:b3fc70a4c5d5a0ab8e5b3c3e818ca224913eee84f65bf63ee212af2bbd5f1792"},
+    {file = "ruff-0.0.244-py3-none-win_amd64.whl", hash = "sha256:78bbc5d1cca0a8752f6e4b3f4485f4c4f2428543a0777d1bde865aa43bdab190"},
+    {file = "ruff-0.0.244.tar.gz", hash = "sha256:7c05773e990348a6d7628b9b7294fe76303bc870dd94d9c34154bc1560053050"},
 ]
 
 [[package]]
@@ -986,19 +1004,19 @@ sanic = ["sanic (>=20.12.2)"]
 
 [[package]]
 name = "strawberry-graphql-django"
-version = "0.8.2"
+version = "0.9.2"
 description = "Strawberry GraphQL Django extension"
 category = "main"
 optional = false
 python-versions = ">=3.7,<4.0"
 files = [
-    {file = "strawberry_graphql_django-0.8.2-py3-none-any.whl", hash = "sha256:cc0717bd12b4b60af043cac4a7108c0ae4625c72a45dee99bd99e8952698a4c1"},
-    {file = "strawberry_graphql_django-0.8.2.tar.gz", hash = "sha256:c9ce9de5d3d7a2eacf01ed312d147390fde00a6646a64e2f32896003431ca205"},
+    {file = "strawberry_graphql_django-0.9.2-py3-none-any.whl", hash = "sha256:dcefad606992194cc8c3e7fbef66dad15d3e4a15b7f5bfb9bcae842fd5d033e2"},
+    {file = "strawberry_graphql_django-0.9.2.tar.gz", hash = "sha256:155a744ce6deb5fd0e6061d24f1786d340af70412c8b356739e39be49c2fafb2"},
 ]
 
 [package.dependencies]
-Django = ">=3.0"
-strawberry-graphql = ">=0.139.0"
+Django = ">=3.2"
+strawberry-graphql = ">=0.154.0"
 
 [[package]]
 name = "tomli"
@@ -1041,6 +1059,18 @@ files = [
 ]
 
 [[package]]
+name = "tzdata"
+version = "2022.7"
+description = "Provider of IANA time zone data"
+category = "main"
+optional = false
+python-versions = ">=2"
+files = [
+    {file = "tzdata-2022.7-py2.py3-none-any.whl", hash = "sha256:2b88858b0e3120792a3c0635c23daf36a7d7eeeca657c323da299d2094402a0d"},
+    {file = "tzdata-2022.7.tar.gz", hash = "sha256:fe5f866eddd8b96e9fcba978f8e503c909b19ea7efda11e52e39494bad3a7bfa"},
+]
+
+[[package]]
 name = "urllib3"
 version = "1.26.14"
 description = "HTTP library with thread-safe connection pooling, file post, and more."
@@ -1076,4 +1106,4 @@ django-plus = ["django", "strawberry-graphql-django", "strawberry-django-plus", 
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "8661e6fef1a5ba13412d66b97dc6b87a020bb3e208dc2e0cda9b227bab9628bd"
+content-hash = "8d4e9ceaaf152ca84b53cd7473f407604b8d0055640487e0539074b978f0923a"
