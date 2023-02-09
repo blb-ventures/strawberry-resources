@@ -17,6 +17,7 @@ class RoleType:
 
 @gql.django.type(Person)
 class PersonType:
+    status: gql.auto
     name: gql.auto
     birthday: Annotated[gql.auto, config(label="User Birthday")]
     age: gql.auto
@@ -25,6 +26,7 @@ class PersonType:
 
 @gql.django.input(Person)
 class PersonInput:
+    status: gql.auto
     name: gql.auto
     birthday: Annotated[gql.auto, config(label="User Birthday")]
     age: gql.auto
@@ -38,7 +40,7 @@ class Query:
 @strawberry.type
 class Mutation:
     @gql.django.mutation
-    def create_person(self, input: PersonInput) -> PersonType:  # noqa: A002  # pragma: nocover
+    def create_person(self, input: PersonInput) -> PersonType:
         ...
 
 
@@ -60,6 +62,28 @@ def test_query():
     assert res.data == {
         "resource": {
             "fields": [
+                {
+                    "__typename": "Field",
+                    "choices": [
+                        {"group": None, "label": "Active", "value": "ACTIVE"},
+                        {"group": None, "label": "Inactive", "value": "INACTIVE"},
+                    ],
+                    "defaultValue": Person.Status.ACTIVE,
+                    "filterable": False,
+                    "helpText": None,
+                    "kind": "STRING",
+                    "label": "Status",
+                    "multiple": False,
+                    "name": "status",
+                    "orderable": False,
+                    "resource": None,
+                    "validation": {
+                        "__typename": "StringFieldValidation",
+                        "maxLength": 8,
+                        "minLength": 1,
+                        "required": True,
+                    },
+                },
                 {
                     "__typename": "Field",
                     "choices": None,
@@ -146,6 +170,28 @@ def test_query_input_type():
     assert res.data == {
         "resource": {
             "fields": [
+                {
+                    "__typename": "Field",
+                    "choices": [
+                        {"group": None, "label": "Active", "value": "ACTIVE"},
+                        {"group": None, "label": "Inactive", "value": "INACTIVE"},
+                    ],
+                    "defaultValue": Person.Status.ACTIVE,
+                    "filterable": False,
+                    "helpText": None,
+                    "kind": "STRING",
+                    "label": "Status",
+                    "multiple": False,
+                    "name": "status",
+                    "orderable": False,
+                    "resource": None,
+                    "validation": {
+                        "__typename": "StringFieldValidation",
+                        "maxLength": 8,
+                        "minLength": 1,
+                        "required": True,
+                    },
+                },
                 {
                     "__typename": "Field",
                     "choices": None,

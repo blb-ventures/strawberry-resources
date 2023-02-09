@@ -1,4 +1,6 @@
 from django.db import models
+from django.utils.translation import gettext_lazy as _
+from django_choices_field import TextChoicesField
 from strawberry_django_plus import gql
 from typing_extensions import Annotated
 
@@ -13,12 +15,23 @@ class Role(models.Model):
 
 
 class Person(models.Model):
+    class Status(models.TextChoices):
+        ACTIVE = "ACTIVE", _("Active")
+        INACTIVE = "INACTIVE", _("Inactive")
+
+    status = TextChoicesField(
+        verbose_name="Status",
+        help_text="The current status for the user",
+        choices_enum=Status,
+        default=Status.ACTIVE,
+    )
     name = models.CharField(
         max_length=255,
         verbose_name="Name",
     )
     birthday = models.DateField(
         verbose_name="Birthday",
+        help_text="When the user was born",
         null=True,
         default=None,
     )
