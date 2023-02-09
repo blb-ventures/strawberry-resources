@@ -16,6 +16,7 @@ from strawberry.custom_scalar import ScalarWrapper
 from strawberry.enum import EnumDefinition
 from strawberry.file_uploads import Upload
 from strawberry.lazy_type import LazyType
+from strawberry.scalars import JSON
 from strawberry.type import StrawberryContainer, StrawberryList, StrawberryOptional
 from strawberry.types.types import TypeDefinition
 from strawberry.utils.str_converters import to_camel_case
@@ -28,6 +29,7 @@ from strawberry_resources.utils.pyutils import dict_merge
 from .types import (
     BaseFieldValidation,
     Field,
+    FieldChoice,
     FieldKind,
     FieldObject,
     FieldObjectKind,
@@ -125,6 +127,21 @@ def resolve_fields_for_type(type_: type, *, depth: int = 0):
         if isinstance(f_type, LazyType):
             f_type = f_type.resolve_type()
         if isinstance(f_type, EnumDefinition):
+            if all(isinstance(v.value, int) for v in f_type.values):
+                options["kind"] = FieldKind.INT
+            elif all(isinstance(v.value, str) for v in f_type.values):
+                options["kind"] = FieldKind.STRING
+            else:
+                # FIXME: Are there other possibilities other than int or string?
+                options["kind"] = FieldKind.STRING
+
+            options["choices"] = [
+                FieldChoice(
+                    label=value.description or value.name,
+                    value=cast(JSON, value.name),
+                )
+                for value in f_type.values
+            ]
             f_type = f_type.wrapped_cls
         if isinstance(f_type, ScalarWrapper):
             f_type = f_type.wrap

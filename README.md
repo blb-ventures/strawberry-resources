@@ -8,7 +8,7 @@
 ![django version](https://img.shields.io/pypi/djversions/strawberry-resources.svg)
 
 Introspection utilities to extract data from the schema to use as helpers in the
-client, like building an automatic form.
+client, like building an automatic form for input types.
 
 ## Installation
 
@@ -31,10 +31,16 @@ to merge it with your own `Query` type.
 Then, given this example:
 
 ```python
+@strawberry.enum
+class Color(enum.Enum):
+    YELLOW = strawberry.enum_value("yellow", description="Color Yellow")
+    RED = "red"
+    ORANGE = "orange"
+
 @strawberry.type
 class Fruit:
     name: str
-    color: Annotate[str, strawberry_resource.config(label="Color")]
+    color: Annotated[Color, config(label="Color")]
     weight: Annotate[float, strawberry_resource.config(label="Weight")]
 
 @strawberry.type
@@ -73,6 +79,9 @@ You can query `resource(name: "Market")` which would return:
       },
       {
         "__typename": "FieldObject",
+        "label": "Fruits",
+        "name": "fruits",
+        "objKind": "OBJECT_LIST"
         "fields": [
           {
             "__typename": "Field",
@@ -93,7 +102,23 @@ You can query `resource(name: "Market")` which would return:
           },
           {
             "__typename": "Field",
-            "choices": null,
+            "choices": [
+              {
+                "group": null,
+                "label": "Color Yellow",
+                "value": "YELLOW"
+              },
+              {
+                "group": null,
+                "label": "RED",
+                "value": "RED"
+              },
+              {
+                "group": null,
+                "label": "ORANGE",
+                "value": "ORANGE"
+              }
+            ],
             "defaultValue": null,
             "filterable": false,
             "helpText": null,
@@ -126,9 +151,6 @@ You can query `resource(name: "Market")` which would return:
             }
           }
         ],
-        "label": "Fruits",
-        "name": "fruits",
-        "objKind": "OBJECT_LIST"
       }
     ],
   }

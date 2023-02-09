@@ -1,8 +1,10 @@
 import datetime
 import decimal
+import enum
 
 import strawberry
 from strawberry.tools import merge_types
+from strawberry_django.filters import Optional
 from typing_extensions import Annotated
 
 from strawberry_resources.queries import Query as _Query
@@ -17,6 +19,11 @@ from .utils import resource_query
 
 
 def test_query():
+    @strawberry.enum
+    class SomeEnum(enum.Enum):
+        FOO = "foo"
+        BAR = strawberry.enum_value("bar", description="Bar")
+
     @strawberry.type
     class SomeType:
         id_field: strawberry.ID
@@ -27,6 +34,7 @@ def test_query():
         date_field: datetime.date
         datetime_field: datetime.datetime
         time_field: datetime.time
+        some_enum: SomeEnum
 
     @strawberry.type
     class Query:
@@ -159,6 +167,23 @@ def test_query():
                     "resource": None,
                     "validation": {"__typename": "BaseFieldValidation", "required": True},
                 },
+                {
+                    "__typename": "Field",
+                    "choices": [
+                        {"group": None, "label": "FOO", "value": "FOO"},
+                        {"group": None, "label": "Bar", "value": "BAR"},
+                    ],
+                    "defaultValue": None,
+                    "filterable": False,
+                    "helpText": None,
+                    "kind": "STRING",
+                    "label": "some_enum",
+                    "multiple": False,
+                    "name": "someEnum",
+                    "orderable": False,
+                    "resource": None,
+                    "validation": {"__typename": "BaseFieldValidation", "required": True},
+                },
             ],
             "name": "SomeType",
         },
@@ -166,6 +191,11 @@ def test_query():
 
 
 def test_query_with_annotations():
+    @strawberry.enum
+    class SomeEnum(enum.Enum):
+        FOO = "foo"
+        BAR = strawberry.enum_value("bar", description="Bar")
+
     @strawberry.type
     class SomeType:
         id_field: strawberry.ID
@@ -178,6 +208,7 @@ def test_query_with_annotations():
                 validation=DecimalFieldValidation(min_value=0, max_value=1),
             ),
         ]
+        some_enum: Annotated[Optional[SomeEnum], config(default_value=SomeEnum.FOO)]
         hidden_field: Hidden[int]
 
     @strawberry.type
@@ -247,6 +278,23 @@ def test_query_with_annotations():
                         "minValue": 0,
                         "required": True,
                     },
+                },
+                {
+                    "__typename": "Field",
+                    "choices": [
+                        {"group": None, "label": "FOO", "value": "FOO"},
+                        {"group": None, "label": "Bar", "value": "BAR"},
+                    ],
+                    "defaultValue": SomeEnum.FOO,
+                    "filterable": False,
+                    "helpText": None,
+                    "kind": "STRING",
+                    "label": "some_enum",
+                    "multiple": False,
+                    "name": "someEnum",
+                    "orderable": False,
+                    "resource": None,
+                    "validation": {"__typename": "BaseFieldValidation", "required": False},
                 },
             ],
             "name": "SomeType",

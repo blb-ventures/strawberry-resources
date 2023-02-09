@@ -1,6 +1,7 @@
 import dataclasses
 import enum
 from typing import (
+    Any,
     List,
     Optional,
     TypedDict,
@@ -240,7 +241,7 @@ class FieldOptions(TypedDict, total=False):
     resource: Optional[str]
     help_text: Optional[str]
     choices: Optional[List[FieldChoice]]
-    default_value: JSON
+    default_value: Any
     validation: FieldValidation
 
 
