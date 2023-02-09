@@ -19,6 +19,8 @@ pip install strawberry-resources
 
 ## How to use
 
+### Usage in a query
+
 This lib provides a `Query` type that has two queries:
 
 - `resources`: Returns a list of all available resources in the schema
@@ -155,6 +157,20 @@ You can query `resource(name: "Market")` which would return:
   }
 }
 ```
+
+### Exporting the resources
+
+You can also use the resources statically by exporting them by using the command:
+
+```shell
+strawberry_resources export --app-dir <schema>
+```
+
+The export functions are also exposed in `strawberry_resources.exporter`. There are
+2 functions there:
+
+- `to_dict`: Will export the resources to a dictionary
+- `to_json`: Will export the resources to a json string (used by the command above)
 
 ## Customizing the resource
 
