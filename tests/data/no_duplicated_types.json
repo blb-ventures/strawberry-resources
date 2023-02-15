@@ -1,0 +1,696 @@
+{
+  "BaseFieldValidation": {
+    "fields": {
+      "required": {
+        "choices": null,
+        "defaultValue": null,
+        "helpText": null,
+        "kind": "BOOLEAN",
+        "label": "required",
+        "name": "required",
+        "resource": null,
+        "validation": {
+          "required": true
+        }
+      }
+    },
+    "name": "BaseFieldValidation"
+  },
+  "DecimalFieldValidation": {
+    "fields": {
+      "decimalPlaces": {
+        "choices": null,
+        "defaultValue": null,
+        "helpText": null,
+        "kind": "INT",
+        "label": "decimal_places",
+        "name": "decimalPlaces",
+        "resource": null,
+        "validation": {
+          "required": false
+        }
+      },
+      "maxDigits": {
+        "choices": null,
+        "defaultValue": null,
+        "helpText": null,
+        "kind": "INT",
+        "label": "max_digits",
+        "name": "maxDigits",
+        "resource": null,
+        "validation": {
+          "required": false
+        }
+      },
+      "maxValue": {
+        "choices": null,
+        "defaultValue": null,
+        "helpText": null,
+        "kind": "INT",
+        "label": "max_value",
+        "name": "maxValue",
+        "resource": null,
+        "validation": {
+          "required": false
+        }
+      },
+      "minValue": {
+        "choices": null,
+        "defaultValue": null,
+        "helpText": null,
+        "kind": "INT",
+        "label": "min_value",
+        "name": "minValue",
+        "resource": null,
+        "validation": {
+          "required": false
+        }
+      },
+      "required": {
+        "choices": null,
+        "defaultValue": null,
+        "helpText": null,
+        "kind": "BOOLEAN",
+        "label": "required",
+        "name": "required",
+        "resource": null,
+        "validation": {
+          "required": true
+        }
+      }
+    },
+    "name": "DecimalFieldValidation"
+  },
+  "Field": {
+    "fields": {
+      "choices": {
+        "label": "choices",
+        "name": "choices",
+        "objKind": "OBJECT_LIST",
+        "objType": "FieldChoice"
+      },
+      "filterable": {
+        "choices": null,
+        "defaultValue": null,
+        "helpText": null,
+        "kind": "BOOLEAN",
+        "label": "filterable",
+        "name": "filterable",
+        "resource": null,
+        "validation": {
+          "required": true
+        }
+      },
+      "helpText": {
+        "choices": null,
+        "defaultValue": null,
+        "helpText": null,
+        "kind": "STRING",
+        "label": "help_text",
+        "name": "helpText",
+        "resource": null,
+        "validation": {
+          "required": false
+        }
+      },
+      "kind": {
+        "choices": [
+          {
+            "group": null,
+            "label": "BOOLEAN",
+            "value": "BOOLEAN"
+          },
+          {
+            "group": null,
+            "label": "CURRENCY",
+            "value": "CURRENCY"
+          },
+          {
+            "group": null,
+            "label": "DATE",
+            "value": "DATE"
+          },
+          {
+            "group": null,
+            "label": "DATETIME",
+            "value": "DATETIME"
+          },
+          {
+            "group": null,
+            "label": "TIMEDELTA",
+            "value": "TIMEDELTA"
+          },
+          {
+            "group": null,
+            "label": "DECIMAL",
+            "value": "DECIMAL"
+          },
+          {
+            "group": null,
+            "label": "EMAIL",
+            "value": "EMAIL"
+          },
+          {
+            "group": null,
+            "label": "FILE",
+            "value": "FILE"
+          },
+          {
+            "group": null,
+            "label": "IMAGE",
+            "value": "IMAGE"
+          },
+          {
+            "group": null,
+            "label": "FLOAT",
+            "value": "FLOAT"
+          },
+          {
+            "group": null,
+            "label": "ID",
+            "value": "ID"
+          },
+          {
+            "group": null,
+            "label": "IP",
+            "value": "IP"
+          },
+          {
+            "group": null,
+            "label": "INT",
+            "value": "INT"
+          },
+          {
+            "group": null,
+            "label": "JSON",
+            "value": "JSON"
+          },
+          {
+            "group": null,
+            "label": "LEGAL_PERSON_DOC",
+            "value": "LEGAL_PERSON_DOC"
+          },
+          {
+            "group": null,
+            "label": "NATURAL_PERSON_DOC",
+            "value": "NATURAL_PERSON_DOC"
+          },
+          {
+            "group": null,
+            "label": "PASSWORD",
+            "value": "PASSWORD"
+          },
+          {
+            "group": null,
+            "label": "PERCENT",
+            "value": "PERCENT"
+          },
+          {
+            "group": null,
+            "label": "PHONE",
+            "value": "PHONE"
+          },
+          {
+            "group": null,
+            "label": "POSTAL_CODE",
+            "value": "POSTAL_CODE"
+          },
+          {
+            "group": null,
+            "label": "STRING",
+            "value": "STRING"
+          },
+          {
+            "group": null,
+            "label": "STRING_LIST",
+            "value": "STRING_LIST"
+          },
+          {
+            "group": null,
+            "label": "MULTILINE",
+            "value": "MULTILINE"
+          },
+          {
+            "group": null,
+            "label": "TIME",
+            "value": "TIME"
+          },
+          {
+            "group": null,
+            "label": "URL",
+            "value": "URL"
+          },
+          {
+            "group": null,
+            "label": "UUID",
+            "value": "UUID"
+          },
+          {
+            "group": null,
+            "label": "POINT",
+            "value": "POINT"
+          },
+          {
+            "group": null,
+            "label": "GEOPOINT",
+            "value": "GEOPOINT"
+          },
+          {
+            "group": null,
+            "label": "POLYGON",
+            "value": "POLYGON"
+          },
+          {
+            "group": null,
+            "label": "DISTANCE",
+            "value": "DISTANCE"
+          }
+        ],
+        "defaultValue": null,
+        "helpText": null,
+        "kind": "STRING",
+        "label": "kind",
+        "name": "kind",
+        "resource": null,
+        "validation": {
+          "required": true
+        }
+      },
+      "label": {
+        "choices": null,
+        "defaultValue": null,
+        "helpText": null,
+        "kind": "STRING",
+        "label": "label",
+        "name": "label",
+        "resource": null,
+        "validation": {
+          "required": true
+        }
+      },
+      "multiple": {
+        "choices": null,
+        "defaultValue": null,
+        "helpText": null,
+        "kind": "BOOLEAN",
+        "label": "multiple",
+        "name": "multiple",
+        "resource": null,
+        "validation": {
+          "required": true
+        }
+      },
+      "name": {
+        "choices": null,
+        "defaultValue": null,
+        "helpText": null,
+        "kind": "STRING",
+        "label": "name",
+        "name": "name",
+        "resource": null,
+        "validation": {
+          "required": true
+        }
+      },
+      "orderable": {
+        "choices": null,
+        "defaultValue": null,
+        "helpText": null,
+        "kind": "BOOLEAN",
+        "label": "orderable",
+        "name": "orderable",
+        "resource": null,
+        "validation": {
+          "required": true
+        }
+      },
+      "resource": {
+        "choices": null,
+        "defaultValue": null,
+        "helpText": null,
+        "kind": "STRING",
+        "label": "resource",
+        "name": "resource",
+        "resource": null,
+        "validation": {
+          "required": false
+        }
+      }
+    },
+    "name": "Field"
+  },
+  "FieldChoice": {
+    "fields": {
+      "group": {
+        "choices": null,
+        "defaultValue": null,
+        "helpText": null,
+        "kind": "STRING",
+        "label": "group",
+        "name": "group",
+        "resource": null,
+        "validation": {
+          "required": false
+        }
+      },
+      "label": {
+        "choices": null,
+        "defaultValue": null,
+        "helpText": null,
+        "kind": "STRING",
+        "label": "label",
+        "name": "label",
+        "resource": null,
+        "validation": {
+          "required": true
+        }
+      }
+    },
+    "name": "FieldChoice"
+  },
+  "FieldObject": {
+    "fields": {
+      "label": {
+        "choices": null,
+        "defaultValue": null,
+        "helpText": null,
+        "kind": "STRING",
+        "label": "label",
+        "name": "label",
+        "resource": null,
+        "validation": {
+          "required": true
+        }
+      },
+      "name": {
+        "choices": null,
+        "defaultValue": null,
+        "helpText": null,
+        "kind": "STRING",
+        "label": "name",
+        "name": "name",
+        "resource": null,
+        "validation": {
+          "required": true
+        }
+      },
+      "objKind": {
+        "choices": [
+          {
+            "group": null,
+            "label": "OBJECT",
+            "value": "OBJECT"
+          },
+          {
+            "group": null,
+            "label": "OBJECT_LIST",
+            "value": "OBJECT_LIST"
+          },
+          {
+            "group": null,
+            "label": "INPUT",
+            "value": "INPUT"
+          },
+          {
+            "group": null,
+            "label": "INPUT_LIST",
+            "value": "INPUT_LIST"
+          },
+          {
+            "group": null,
+            "label": "LIST_INPUT",
+            "value": "LIST_INPUT"
+          }
+        ],
+        "defaultValue": null,
+        "helpText": null,
+        "kind": "STRING",
+        "label": "obj_kind",
+        "name": "objKind",
+        "resource": null,
+        "validation": {
+          "required": true
+        }
+      },
+      "objType": {
+        "choices": null,
+        "defaultValue": null,
+        "helpText": null,
+        "kind": "STRING",
+        "label": "obj_type",
+        "name": "objType",
+        "resource": null,
+        "validation": {
+          "required": true
+        }
+      }
+    },
+    "name": "FieldObject"
+  },
+  "IntFieldValidation": {
+    "fields": {
+      "maxValue": {
+        "choices": null,
+        "defaultValue": null,
+        "helpText": null,
+        "kind": "INT",
+        "label": "max_value",
+        "name": "maxValue",
+        "resource": null,
+        "validation": {
+          "required": false
+        }
+      },
+      "minValue": {
+        "choices": null,
+        "defaultValue": null,
+        "helpText": null,
+        "kind": "INT",
+        "label": "min_value",
+        "name": "minValue",
+        "resource": null,
+        "validation": {
+          "required": false
+        }
+      },
+      "required": {
+        "choices": null,
+        "defaultValue": null,
+        "helpText": null,
+        "kind": "BOOLEAN",
+        "label": "required",
+        "name": "required",
+        "resource": null,
+        "validation": {
+          "required": true
+        }
+      }
+    },
+    "name": "IntFieldValidation"
+  },
+  "Query": {
+    "fields": {
+      "resource": {
+        "label": "resource",
+        "name": "resource",
+        "objKind": "OBJECT",
+        "objType": "Resource"
+      },
+      "resources": {
+        "label": "resources",
+        "name": "resources",
+        "objKind": "OBJECT_LIST",
+        "objType": "Resource"
+      },
+      "someType": {
+        "label": "some_type",
+        "name": "someType",
+        "objKind": "OBJECT",
+        "objType": "SomeType"
+      }
+    },
+    "name": "Query"
+  },
+  "Resource": {
+    "fields": {
+      "name": {
+        "choices": null,
+        "defaultValue": null,
+        "helpText": null,
+        "kind": "STRING",
+        "label": "name",
+        "name": "name",
+        "resource": null,
+        "validation": {
+          "required": true
+        }
+      }
+    },
+    "name": "Resource"
+  },
+  "SomeType": {
+    "fields": {
+      "dateField": {
+        "choices": null,
+        "defaultValue": null,
+        "helpText": null,
+        "kind": "DATE",
+        "label": "date_field",
+        "name": "dateField",
+        "resource": null,
+        "validation": {
+          "required": true
+        }
+      },
+      "datetimeField": {
+        "choices": null,
+        "defaultValue": null,
+        "helpText": null,
+        "kind": "DATETIME",
+        "label": "datetime_field",
+        "name": "datetimeField",
+        "resource": null,
+        "validation": {
+          "required": true
+        }
+      },
+      "decimalField": {
+        "choices": null,
+        "defaultValue": null,
+        "helpText": null,
+        "kind": "DECIMAL",
+        "label": "decimal_field",
+        "name": "decimalField",
+        "resource": null,
+        "validation": {
+          "required": true
+        }
+      },
+      "floatField": {
+        "choices": null,
+        "defaultValue": null,
+        "helpText": null,
+        "kind": "FLOAT",
+        "label": "float_field",
+        "name": "floatField",
+        "resource": null,
+        "validation": {
+          "required": true
+        }
+      },
+      "idField": {
+        "choices": null,
+        "defaultValue": null,
+        "helpText": null,
+        "kind": "ID",
+        "label": "id_field",
+        "name": "idField",
+        "resource": null,
+        "validation": {
+          "required": true
+        }
+      },
+      "intField": {
+        "choices": null,
+        "defaultValue": null,
+        "helpText": null,
+        "kind": "INT",
+        "label": "int_field",
+        "name": "intField",
+        "resource": null,
+        "validation": {
+          "required": true
+        }
+      },
+      "someEnum": {
+        "choices": [
+          {
+            "group": null,
+            "label": "FOO",
+            "value": "FOO"
+          },
+          {
+            "group": null,
+            "label": "Bar",
+            "value": "BAR"
+          }
+        ],
+        "defaultValue": null,
+        "helpText": null,
+        "kind": "STRING",
+        "label": "some_enum",
+        "name": "someEnum",
+        "resource": null,
+        "validation": {
+          "required": true
+        }
+      },
+      "strField": {
+        "choices": null,
+        "defaultValue": null,
+        "helpText": null,
+        "kind": "STRING",
+        "label": "str_field",
+        "name": "strField",
+        "resource": null,
+        "validation": {
+          "required": true
+        }
+      },
+      "timeField": {
+        "choices": null,
+        "defaultValue": null,
+        "helpText": null,
+        "kind": "TIME",
+        "label": "time_field",
+        "name": "timeField",
+        "resource": null,
+        "validation": {
+          "required": true
+        }
+      }
+    },
+    "name": "SomeType"
+  },
+  "StringFieldValidation": {
+    "fields": {
+      "maxLength": {
+        "choices": null,
+        "defaultValue": null,
+        "helpText": null,
+        "kind": "INT",
+        "label": "max_length",
+        "name": "maxLength",
+        "resource": null,
+        "validation": {
+          "required": false
+        }
+      },
+      "minLength": {
+        "choices": null,
+        "defaultValue": null,
+        "helpText": null,
+        "kind": "INT",
+        "label": "min_length",
+        "name": "minLength",
+        "resource": null,
+        "validation": {
+          "required": false
+        }
+      },
+      "required": {
+        "choices": null,
+        "defaultValue": null,
+        "helpText": null,
+        "kind": "BOOLEAN",
+        "label": "required",
+        "name": "required",
+        "resource": null,
+        "validation": {
+          "required": true
+        }
+      }
+    },
+    "name": "StringFieldValidation"
+  }
+}

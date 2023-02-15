@@ -1,0 +1,640 @@
+{
+  "BaseFieldValidation": {
+    "fields": {
+      "required": {
+        "kind": "BOOLEAN",
+        "label": "required",
+        "name": "required",
+        "validation": {
+          "required": true
+        }
+      }
+    },
+    "name": "BaseFieldValidation"
+  },
+  "DecimalFieldValidation": {
+    "fields": {
+      "decimalPlaces": {
+        "kind": "INT",
+        "label": "decimal_places",
+        "name": "decimalPlaces",
+        "validation": {
+          "required": false
+        }
+      },
+      "maxDigits": {
+        "kind": "INT",
+        "label": "max_digits",
+        "name": "maxDigits",
+        "validation": {
+          "required": false
+        }
+      },
+      "maxValue": {
+        "kind": "INT",
+        "label": "max_value",
+        "name": "maxValue",
+        "validation": {
+          "required": false
+        }
+      },
+      "minValue": {
+        "kind": "INT",
+        "label": "min_value",
+        "name": "minValue",
+        "validation": {
+          "required": false
+        }
+      },
+      "required": {
+        "kind": "BOOLEAN",
+        "label": "required",
+        "name": "required",
+        "validation": {
+          "required": true
+        }
+      }
+    },
+    "name": "DecimalFieldValidation"
+  },
+  "Field": {
+    "fields": {
+      "choices": {
+        "fields": {
+          "group": {
+            "kind": "STRING",
+            "label": "group",
+            "name": "group",
+            "validation": {
+              "required": false
+            }
+          },
+          "label": {
+            "kind": "STRING",
+            "label": "label",
+            "name": "label",
+            "validation": {
+              "required": true
+            }
+          }
+        },
+        "label": "choices",
+        "name": "choices",
+        "objKind": "OBJECT_LIST",
+        "objType": "FieldChoice"
+      },
+      "filterable": {
+        "kind": "BOOLEAN",
+        "label": "filterable",
+        "name": "filterable",
+        "validation": {
+          "required": true
+        }
+      },
+      "helpText": {
+        "kind": "STRING",
+        "label": "help_text",
+        "name": "helpText",
+        "validation": {
+          "required": false
+        }
+      },
+      "kind": {
+        "choices": [
+          {
+            "label": "BOOLEAN",
+            "value": "BOOLEAN"
+          },
+          {
+            "label": "CURRENCY",
+            "value": "CURRENCY"
+          },
+          {
+            "label": "DATE",
+            "value": "DATE"
+          },
+          {
+            "label": "DATETIME",
+            "value": "DATETIME"
+          },
+          {
+            "label": "TIMEDELTA",
+            "value": "TIMEDELTA"
+          },
+          {
+            "label": "DECIMAL",
+            "value": "DECIMAL"
+          },
+          {
+            "label": "EMAIL",
+            "value": "EMAIL"
+          },
+          {
+            "label": "FILE",
+            "value": "FILE"
+          },
+          {
+            "label": "IMAGE",
+            "value": "IMAGE"
+          },
+          {
+            "label": "FLOAT",
+            "value": "FLOAT"
+          },
+          {
+            "label": "ID",
+            "value": "ID"
+          },
+          {
+            "label": "IP",
+            "value": "IP"
+          },
+          {
+            "label": "INT",
+            "value": "INT"
+          },
+          {
+            "label": "JSON",
+            "value": "JSON"
+          },
+          {
+            "label": "LEGAL_PERSON_DOC",
+            "value": "LEGAL_PERSON_DOC"
+          },
+          {
+            "label": "NATURAL_PERSON_DOC",
+            "value": "NATURAL_PERSON_DOC"
+          },
+          {
+            "label": "PASSWORD",
+            "value": "PASSWORD"
+          },
+          {
+            "label": "PERCENT",
+            "value": "PERCENT"
+          },
+          {
+            "label": "PHONE",
+            "value": "PHONE"
+          },
+          {
+            "label": "POSTAL_CODE",
+            "value": "POSTAL_CODE"
+          },
+          {
+            "label": "STRING",
+            "value": "STRING"
+          },
+          {
+            "label": "STRING_LIST",
+            "value": "STRING_LIST"
+          },
+          {
+            "label": "MULTILINE",
+            "value": "MULTILINE"
+          },
+          {
+            "label": "TIME",
+            "value": "TIME"
+          },
+          {
+            "label": "URL",
+            "value": "URL"
+          },
+          {
+            "label": "UUID",
+            "value": "UUID"
+          },
+          {
+            "label": "POINT",
+            "value": "POINT"
+          },
+          {
+            "label": "GEOPOINT",
+            "value": "GEOPOINT"
+          },
+          {
+            "label": "POLYGON",
+            "value": "POLYGON"
+          },
+          {
+            "label": "DISTANCE",
+            "value": "DISTANCE"
+          }
+        ],
+        "kind": "STRING",
+        "label": "kind",
+        "name": "kind",
+        "validation": {
+          "required": true
+        }
+      },
+      "label": {
+        "kind": "STRING",
+        "label": "label",
+        "name": "label",
+        "validation": {
+          "required": true
+        }
+      },
+      "multiple": {
+        "kind": "BOOLEAN",
+        "label": "multiple",
+        "name": "multiple",
+        "validation": {
+          "required": true
+        }
+      },
+      "name": {
+        "kind": "STRING",
+        "label": "name",
+        "name": "name",
+        "validation": {
+          "required": true
+        }
+      },
+      "orderable": {
+        "kind": "BOOLEAN",
+        "label": "orderable",
+        "name": "orderable",
+        "validation": {
+          "required": true
+        }
+      },
+      "resource": {
+        "kind": "STRING",
+        "label": "resource",
+        "name": "resource",
+        "validation": {
+          "required": false
+        }
+      }
+    },
+    "name": "Field"
+  },
+  "FieldChoice": {
+    "fields": {
+      "group": {
+        "kind": "STRING",
+        "label": "group",
+        "name": "group",
+        "validation": {
+          "required": false
+        }
+      },
+      "label": {
+        "kind": "STRING",
+        "label": "label",
+        "name": "label",
+        "validation": {
+          "required": true
+        }
+      }
+    },
+    "name": "FieldChoice"
+  },
+  "FieldObject": {
+    "fields": {
+      "label": {
+        "kind": "STRING",
+        "label": "label",
+        "name": "label",
+        "validation": {
+          "required": true
+        }
+      },
+      "name": {
+        "kind": "STRING",
+        "label": "name",
+        "name": "name",
+        "validation": {
+          "required": true
+        }
+      },
+      "objKind": {
+        "choices": [
+          {
+            "label": "OBJECT",
+            "value": "OBJECT"
+          },
+          {
+            "label": "OBJECT_LIST",
+            "value": "OBJECT_LIST"
+          },
+          {
+            "label": "INPUT",
+            "value": "INPUT"
+          },
+          {
+            "label": "INPUT_LIST",
+            "value": "INPUT_LIST"
+          },
+          {
+            "label": "LIST_INPUT",
+            "value": "LIST_INPUT"
+          }
+        ],
+        "kind": "STRING",
+        "label": "obj_kind",
+        "name": "objKind",
+        "validation": {
+          "required": true
+        }
+      },
+      "objType": {
+        "kind": "STRING",
+        "label": "obj_type",
+        "name": "objType",
+        "validation": {
+          "required": true
+        }
+      }
+    },
+    "name": "FieldObject"
+  },
+  "IntFieldValidation": {
+    "fields": {
+      "maxValue": {
+        "kind": "INT",
+        "label": "max_value",
+        "name": "maxValue",
+        "validation": {
+          "required": false
+        }
+      },
+      "minValue": {
+        "kind": "INT",
+        "label": "min_value",
+        "name": "minValue",
+        "validation": {
+          "required": false
+        }
+      },
+      "required": {
+        "kind": "BOOLEAN",
+        "label": "required",
+        "name": "required",
+        "validation": {
+          "required": true
+        }
+      }
+    },
+    "name": "IntFieldValidation"
+  },
+  "Query": {
+    "fields": {
+      "resource": {
+        "fields": {
+          "name": {
+            "kind": "STRING",
+            "label": "name",
+            "name": "name",
+            "validation": {
+              "required": true
+            }
+          }
+        },
+        "label": "resource",
+        "name": "resource",
+        "objKind": "OBJECT",
+        "objType": "Resource"
+      },
+      "resources": {
+        "fields": {
+          "name": {
+            "kind": "STRING",
+            "label": "name",
+            "name": "name",
+            "validation": {
+              "required": true
+            }
+          }
+        },
+        "label": "resources",
+        "name": "resources",
+        "objKind": "OBJECT_LIST",
+        "objType": "Resource"
+      },
+      "someType": {
+        "fields": {
+          "dateField": {
+            "kind": "DATE",
+            "label": "date_field",
+            "name": "dateField",
+            "validation": {
+              "required": true
+            }
+          },
+          "datetimeField": {
+            "kind": "DATETIME",
+            "label": "datetime_field",
+            "name": "datetimeField",
+            "validation": {
+              "required": true
+            }
+          },
+          "decimalField": {
+            "kind": "DECIMAL",
+            "label": "decimal_field",
+            "name": "decimalField",
+            "validation": {
+              "required": true
+            }
+          },
+          "floatField": {
+            "kind": "FLOAT",
+            "label": "float_field",
+            "name": "floatField",
+            "validation": {
+              "required": true
+            }
+          },
+          "idField": {
+            "kind": "ID",
+            "label": "id_field",
+            "name": "idField",
+            "validation": {
+              "required": true
+            }
+          },
+          "intField": {
+            "kind": "INT",
+            "label": "int_field",
+            "name": "intField",
+            "validation": {
+              "required": true
+            }
+          },
+          "someEnum": {
+            "choices": [
+              {
+                "label": "FOO",
+                "value": "FOO"
+              },
+              {
+                "label": "Bar",
+                "value": "BAR"
+              }
+            ],
+            "kind": "STRING",
+            "label": "some_enum",
+            "name": "someEnum",
+            "validation": {
+              "required": true
+            }
+          },
+          "strField": {
+            "kind": "STRING",
+            "label": "str_field",
+            "name": "strField",
+            "validation": {
+              "required": true
+            }
+          },
+          "timeField": {
+            "kind": "TIME",
+            "label": "time_field",
+            "name": "timeField",
+            "validation": {
+              "required": true
+            }
+          }
+        },
+        "label": "some_type",
+        "name": "someType",
+        "objKind": "OBJECT",
+        "objType": "SomeType"
+      }
+    },
+    "name": "Query"
+  },
+  "Resource": {
+    "fields": {
+      "name": {
+        "kind": "STRING",
+        "label": "name",
+        "name": "name",
+        "validation": {
+          "required": true
+        }
+      }
+    },
+    "name": "Resource"
+  },
+  "SomeType": {
+    "fields": {
+      "dateField": {
+        "kind": "DATE",
+        "label": "date_field",
+        "name": "dateField",
+        "validation": {
+          "required": true
+        }
+      },
+      "datetimeField": {
+        "kind": "DATETIME",
+        "label": "datetime_field",
+        "name": "datetimeField",
+        "validation": {
+          "required": true
+        }
+      },
+      "decimalField": {
+        "kind": "DECIMAL",
+        "label": "decimal_field",
+        "name": "decimalField",
+        "validation": {
+          "required": true
+        }
+      },
+      "floatField": {
+        "kind": "FLOAT",
+        "label": "float_field",
+        "name": "floatField",
+        "validation": {
+          "required": true
+        }
+      },
+      "idField": {
+        "kind": "ID",
+        "label": "id_field",
+        "name": "idField",
+        "validation": {
+          "required": true
+        }
+      },
+      "intField": {
+        "kind": "INT",
+        "label": "int_field",
+        "name": "intField",
+        "validation": {
+          "required": true
+        }
+      },
+      "someEnum": {
+        "choices": [
+          {
+            "label": "FOO",
+            "value": "FOO"
+          },
+          {
+            "label": "Bar",
+            "value": "BAR"
+          }
+        ],
+        "kind": "STRING",
+        "label": "some_enum",
+        "name": "someEnum",
+        "validation": {
+          "required": true
+        }
+      },
+      "strField": {
+        "kind": "STRING",
+        "label": "str_field",
+        "name": "strField",
+        "validation": {
+          "required": true
+        }
+      },
+      "timeField": {
+        "kind": "TIME",
+        "label": "time_field",
+        "name": "timeField",
+        "validation": {
+          "required": true
+        }
+      }
+    },
+    "name": "SomeType"
+  },
+  "StringFieldValidation": {
+    "fields": {
+      "maxLength": {
+        "kind": "INT",
+        "label": "max_length",
+        "name": "maxLength",
+        "validation": {
+          "required": false
+        }
+      },
+      "minLength": {
+        "kind": "INT",
+        "label": "min_length",
+        "name": "minLength",
+        "validation": {
+          "required": false
+        }
+      },
+      "required": {
+        "kind": "BOOLEAN",
+        "label": "required",
+        "name": "required",
+        "validation": {
+          "required": true
+        }
+      }
+    },
+    "name": "StringFieldValidation"
+  }
+}

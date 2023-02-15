@@ -213,6 +213,7 @@ def resolve_fields_for_type(type_: type, *, depth: int = 0):
                 name=cname,
                 label=options.get("label", field.name),
                 obj_kind=obj_kind,
+                obj_type=inner_type_def.name,
                 fields=list(resolve_fields_for_type(f_type, depth=depth + 1)),
             )
         else:

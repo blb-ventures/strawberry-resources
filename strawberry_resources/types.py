@@ -224,6 +224,9 @@ class FieldObject:
     obj_kind: FieldObjectKind = strawberry.field(
         description="The kind of the field.",
     )
+    obj_type: str = strawberry.field(
+        description="The obj type name.",
+    )
     fields: List["ResourceField"] = strawberry.field(
         description="All subfields of this field.",
     )
