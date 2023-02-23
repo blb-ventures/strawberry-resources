@@ -78,7 +78,7 @@ def _get_model_field(
     model: Type[models.Model],
     field: str,
 ) -> Optional[Union[models.Field, models.ForeignObjectRel]]:
-    meta = model._meta
+    meta = model._meta  # noqa: SLF001
     for f in meta.get_fields():
         name = cast(str, resolve_model_field_name(f, is_input=False, is_filter=False))
         if name == field:
@@ -179,8 +179,8 @@ def get_field_options(
         for value, label in items:
             if isinstance(label, (list, tuple)):
                 group = value
-                for value, lbl in label:
-                    choices.append(FieldChoice(label=lbl, value=value, group=group))
+                for group_value, group_lbl in label:
+                    choices.append(FieldChoice(label=group_lbl, value=group_value, group=group))
             else:
                 choices.append(FieldChoice(label=label, value=value))
 

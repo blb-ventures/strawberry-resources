@@ -46,7 +46,7 @@ def get_all() -> List[StrawberryResourceIntegration]:
                     fromlist=["integration"],
                 )
                 if not isinstance(mod.integration, StrawberryResourceIntegration):
-                    raise ValueError
+                    raise TypeError
 
         _integrations_imported = True
 

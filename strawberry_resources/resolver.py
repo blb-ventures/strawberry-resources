@@ -96,7 +96,7 @@ def resolve_all(schema: Schema):
 
 
 def resolve_fields_for_type(type_: type, *, depth: int = 0):
-    type_def = cast(TypeDefinition, type_._type_definition)  # type: ignore
+    type_def = cast(TypeDefinition, type_._type_definition)  # type: ignore  # noqa: SLF001
     integrations = get_all()
 
     for field in type_def.fields:
@@ -196,7 +196,10 @@ def resolve_fields_for_type(type_: type, *, depth: int = 0):
             if depth > MAX_DEPTH:
                 continue
 
-            inner_type_def = cast(TypeDefinition, f_type._type_definition)  # type: ignore
+            inner_type_def = cast(
+                TypeDefinition,
+                f_type._type_definition,  # type: ignore  # noqa: SLF001
+            )
 
             assert isinstance(f_type, type)
             obj_kind = options.get("obj_kind")

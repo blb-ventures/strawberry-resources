@@ -51,7 +51,7 @@ pytest = "^7.1.2"
 pytest-cov = "^4.0.0"
 ipython = "^8.4.0"
 pytest-asyncio = "^0.20.1"
-ruff = "^0.0.246"
+ruff = "^0.0.252"
 pytest-django = "^4.5.2"
 
 [tool.poetry.extras]
@@ -71,6 +71,7 @@ select = [
   "W",
   "I",
   "N",
+  "D",
   "UP",
   "YTT",
   "D2",
@@ -90,9 +91,10 @@ select = [
   "INP",
   "PIE",
   "T20",
+  "PYI",
   "PT",
   "Q",
-  # "RET",
+  "RET",
   "SIM",
   "TID",
   "TCH",
@@ -102,7 +104,10 @@ select = [
   "PL",
   "RSE",
   "RUF",
+  "TRY",
+  "SLF",
 ]
+
 ignore = [
   "D203",
   "D213",
@@ -112,6 +117,7 @@ ignore = [
   "PGH003",
   "PLR09",
   "PLR2004",
+  "D1",
 ]
 target-version = "py38"
 exclude = [
