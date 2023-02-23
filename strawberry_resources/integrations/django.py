@@ -184,6 +184,11 @@ def get_field_options(
             else:
                 choices.append(FieldChoice(label=label, value=value))
 
+    # FIXME: We could call default_value(), but for places like timezone.now it is worse than
+    # passing it. We might need to find a proper solution in the future
+    if callable(default_value):
+        default_value = None
+
     options["default_value"] = cast(Any, default_value)
     if choices is not None:
         options["choices"] = choices
