@@ -122,7 +122,6 @@ def get_field_options(
     if (dj_type := _get_django_type(origin)) is None:
         return {}
 
-    f_type = field.type
     model = dj_type.model
     model_attr = getattr(model, field.name, None)
 
@@ -164,13 +163,13 @@ def get_field_options(
 
     choices: Optional[List[FieldChoice]] = None
     default_value = v if (v := getattr(dj_field, "default", None)) is not NOT_PROVIDED else None
-    if isinstance(f_type, type) and issubclass(f_type, models.Choices):
+    if isinstance(resolved_type, type) and issubclass(resolved_type, models.Choices):
         if choices is None:
             choices = [
                 FieldChoice(label=lbl, value=cast(JSON, value))
-                for lbl, value in zip(f_type.labels, f_type.names)
+                for lbl, value in zip(resolved_type.labels, resolved_type.names)
             ]
-        default_value = f_type(default_value).name if default_value is not None else None
+        default_value = resolved_type(default_value).name if default_value is not None else None
     elif choices is None and (items := getattr(dj_field, "choices", None)):
         if isinstance(items, dict):
             items = items.items()
