@@ -27,7 +27,7 @@ class StrawberryResourceIntegration:
 
 
 def get_all() -> List[StrawberryResourceIntegration]:
-    global _integrations_imported
+    global _integrations_imported  # noqa: PLW0603
 
     if not _integrations_imported:
         for module in pathlib.Path(__file__).parent.iterdir():
