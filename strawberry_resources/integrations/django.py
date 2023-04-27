@@ -19,6 +19,7 @@ from django.db.models.fields import NOT_PROVIDED
 from strawberry import UNSET
 from strawberry.field import StrawberryField
 from strawberry.scalars import JSON
+from strawberry.type import StrawberryOptional
 from strawberry_django.fields.types import (
     DjangoFileType,
     DjangoImageType,
@@ -220,6 +221,7 @@ def get_field_options(
     elif isinstance(dj_field, models.CharField):
         options["kind"] = FieldKind.STRING
         options["validation"] = StringFieldValidation(
+            required=not isinstance(field.type, StrawberryOptional),
             min_length=0 if dj_field.blank else 1,
             max_length=dj_field.max_length,
         )
@@ -230,6 +232,7 @@ def get_field_options(
     elif isinstance(dj_field, models.DecimalField):
         options["kind"] = FieldKind.DECIMAL
         options["validation"] = DecimalFieldValidation(
+            required=not isinstance(field.type, StrawberryOptional),
             max_digits=dj_field.max_digits,
             decimal_places=dj_field.decimal_places,
         )

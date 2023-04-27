@@ -189,7 +189,7 @@ def test_query_input_type():
                         "__typename": "StringFieldValidation",
                         "maxLength": 8,
                         "minLength": 1,
-                        "required": True,
+                        "required": False,
                     },
                 },
                 {

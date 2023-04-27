@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "strawberry-resources"
-version = "0.4.2"
+version = "0.4.3"
 description = "Introspection utilities to extract data from strawberry graphql"
 authors = ["Thiago Bellini Ribeiro <thiago@bellini.dev>"]
 license = "MIT"
@@ -186,7 +186,6 @@ python_files = "tests/test_*.py"
 DJANGO_SETTINGS_MODULE = "tests.django_settings"
 addopts = "-p no:warnings --cov=./ --cov-report term-missing:skip-covered"
 asyncio_mode = "auto"
-testpaths = ["tests/"]
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
