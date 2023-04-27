@@ -52,4 +52,4 @@ def get_possible_type_definitions(
         if isinstance(t, TypeDefinition):
             yield t
         elif hasattr(t, "_type_definition"):
-            yield t._type_definition  # type: ignore  # noqa: SLF001
+            yield t._type_definition  # type: ignore

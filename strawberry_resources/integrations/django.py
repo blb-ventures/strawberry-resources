@@ -78,7 +78,7 @@ def _get_model_field(
     model: Type[models.Model],
     field: str,
 ) -> Optional[Union[models.Field, models.ForeignObjectRel]]:
-    meta = model._meta  # noqa: SLF001
+    meta = model._meta
     for f in meta.get_fields():
         name = cast(str, resolve_model_field_name(f, is_input=False, is_filter=False))
         if name == field:

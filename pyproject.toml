@@ -51,7 +51,7 @@ pytest = "^7.1.2"
 pytest-cov = "^4.0.0"
 ipython = "^8.4.0"
 pytest-asyncio = "^0.21.0"
-ruff = "^0.0.259"
+ruff = "^0.0.263"
 pytest-django = "^4.5.2"
 
 [tool.poetry.extras]
@@ -107,8 +107,8 @@ select = [
   "TRY",
   "SLF",
 ]
-
 ignore = [
+  "D1",
   "D203",
   "D213",
   "TCH001",
@@ -117,7 +117,8 @@ ignore = [
   "PGH003",
   "PLR09",
   "PLR2004",
-  "D1",
+  "SLF001",
+  "TRY003",
 ]
 target-version = "py38"
 exclude = [
