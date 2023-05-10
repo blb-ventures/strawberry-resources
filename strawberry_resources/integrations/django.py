@@ -167,11 +167,10 @@ def get_field_options(
 
         return field_obj_options
 
-    if dj_field is None:
-        return options
-
     choices: Optional[List[FieldChoice]] = None
-    default_value = v if (v := getattr(dj_field, "default", None)) is not NOT_PROVIDED else None
+    default_value = (
+        v if dj_field and (v := getattr(dj_field, "default", None)) is not NOT_PROVIDED else None
+    )
     if isinstance(resolved_type, type) and issubclass(resolved_type, models.Choices):
         if choices is None:
             choices = [
@@ -179,7 +178,7 @@ def get_field_options(
                 for lbl, value in zip(resolved_type.labels, resolved_type.names)
             ]
         default_value = resolved_type(default_value).name if default_value is not None else None
-    elif choices is None and (items := getattr(dj_field, "choices", None)):
+    elif choices is None and dj_field and (items := getattr(dj_field, "choices", None)):
         if isinstance(items, dict):
             items = items.items()
 
@@ -201,82 +200,86 @@ def get_field_options(
     if choices is not None:
         options["choices"] = choices
 
-    if (label := getattr(dj_field, "verbose_name", None) or None) is not None:
-        options["label"] = label
+    if dj_type:
+        if (order := dj_type.order) and order is not UNSET:
+            options["orderable"] = field.name in {
+                f.name for f in dataclasses.fields(cast(type, order))
+            }
+        if (filters := dj_type.filters) and filters is not UNSET:
+            options["filterable"] = field.name in {
+                f.name for f in dataclasses.fields(cast(type, filters))
+            }
 
-    if (help_text := getattr(dj_field, "help_Text", None) or None) is not None:
-        options["help_text"] = help_text
+    if dj_field:
+        if (label := getattr(dj_field, "verbose_name", None) or None) is not None:
+            options["label"] = label
 
-    if dj_type and (order := dj_type.order) and order is not UNSET:
-        options["orderable"] = field.name in {f.name for f in dataclasses.fields(cast(type, order))}
-    if dj_type and (filters := dj_type.filters) and filters is not UNSET:
-        options["filterable"] = field.name in {
-            f.name for f in dataclasses.fields(cast(type, filters))
-        }
+        if (help_text := getattr(dj_field, "help_Text", None) or None) is not None:
+            options["help_text"] = help_text
 
-    if isinstance(dj_field, models.ImageField):
-        options["kind"] = FieldKind.IMAGE
-    elif isinstance(dj_field, models.FileField):
-        options["kind"] = FieldKind.FILE
-    elif PhoneNumberField is not None and isinstance(dj_field, PhoneNumberField):
-        options["kind"] = FieldKind.PHONE
-    elif isinstance(dj_field, models.TextField):
-        options["kind"] = FieldKind.MULTILINE
-    elif isinstance(dj_field, (models.IPAddressField, models.GenericIPAddressField)):
-        options["kind"] = FieldKind.IP
-    elif isinstance(dj_field, models.EmailField):
-        options["kind"] = FieldKind.EMAIL
-    elif isinstance(dj_field, models.CharField):
-        options["kind"] = FieldKind.STRING
-        options["validation"] = StringFieldValidation(
-            required=not isinstance(field.type, StrawberryOptional),
-            min_length=0 if dj_field.blank else 1,
-            max_length=dj_field.max_length,
-        )
-    elif isinstance(dj_field, models.UUIDField):
-        options["kind"] = FieldKind.UUID
-    elif isinstance(dj_field, models.URLField):
-        options["kind"] = FieldKind.URL
-    elif isinstance(dj_field, models.DecimalField):
-        options["kind"] = FieldKind.DECIMAL
-        options["validation"] = DecimalFieldValidation(
-            required=not isinstance(field.type, StrawberryOptional),
-            max_digits=dj_field.max_digits,
-            decimal_places=dj_field.decimal_places,
-        )
-    elif isinstance(dj_field, models.FloatField):
-        options["kind"] = FieldKind.FLOAT
-    elif isinstance(dj_field, models.AutoField):
-        options["kind"] = FieldKind.ID
-    elif isinstance(dj_field, models.IntegerField):
-        options["kind"] = FieldKind.INT
-    elif isinstance(dj_field, models.BooleanField):
-        options["kind"] = FieldKind.BOOLEAN
-    elif isinstance(dj_field, models.DateField):
-        options["kind"] = FieldKind.DATETIME
-    elif isinstance(dj_field, models.DateField):
-        options["kind"] = FieldKind.DATE
-    elif isinstance(dj_field, models.TimeField):
-        options["kind"] = FieldKind.TIME
-    elif isinstance(
-        dj_field,
-        (models.ForeignKey, models.OneToOneRel, models.OneToOneField),
-    ):
-        options["kind"] = FieldKind.ID
-    elif isinstance(
-        dj_field,
-        (models.ManyToManyField, models.ManyToManyRel, models.ManyToOneRel),
-    ):
-        options["kind"] = FieldKind.ID
-        options["multiple"] = True
-    elif isinstance(dj_field, models.JSONField):
-        options["kind"] = FieldKind.JSON
-    elif PolygonField is not None and isinstance(dj_field, PolygonField):
-        options["kind"] = FieldKind.POLYGON
-    elif PointField is not None and isinstance(dj_field, PointField):
-        options["kind"] = (
-            FieldKind.GEOPOINT if dj_field.srid == 4326 else FieldKind.POINT  # type: ignore
-        )
+        if isinstance(dj_field, models.ImageField):
+            options["kind"] = FieldKind.IMAGE
+        elif isinstance(dj_field, models.FileField):
+            options["kind"] = FieldKind.FILE
+        elif PhoneNumberField is not None and isinstance(dj_field, PhoneNumberField):
+            options["kind"] = FieldKind.PHONE
+        elif isinstance(dj_field, models.TextField):
+            options["kind"] = FieldKind.MULTILINE
+        elif isinstance(dj_field, (models.IPAddressField, models.GenericIPAddressField)):
+            options["kind"] = FieldKind.IP
+        elif isinstance(dj_field, models.EmailField):
+            options["kind"] = FieldKind.EMAIL
+        elif isinstance(dj_field, models.CharField):
+            options["kind"] = FieldKind.STRING
+            options["validation"] = StringFieldValidation(
+                required=not isinstance(field.type, StrawberryOptional),
+                min_length=0 if dj_field.blank else 1,
+                max_length=dj_field.max_length,
+            )
+        elif isinstance(dj_field, models.UUIDField):
+            options["kind"] = FieldKind.UUID
+        elif isinstance(dj_field, models.URLField):
+            options["kind"] = FieldKind.URL
+        elif isinstance(dj_field, models.DecimalField):
+            options["kind"] = FieldKind.DECIMAL
+            options["validation"] = DecimalFieldValidation(
+                required=not isinstance(field.type, StrawberryOptional),
+                max_digits=dj_field.max_digits,
+                decimal_places=dj_field.decimal_places,
+            )
+        elif isinstance(dj_field, models.FloatField):
+            options["kind"] = FieldKind.FLOAT
+        elif isinstance(dj_field, models.AutoField):
+            options["kind"] = FieldKind.ID
+        elif isinstance(dj_field, models.IntegerField):
+            options["kind"] = FieldKind.INT
+        elif isinstance(dj_field, models.BooleanField):
+            options["kind"] = FieldKind.BOOLEAN
+        elif isinstance(dj_field, models.DateField):
+            options["kind"] = FieldKind.DATETIME
+        elif isinstance(dj_field, models.DateField):
+            options["kind"] = FieldKind.DATE
+        elif isinstance(dj_field, models.TimeField):
+            options["kind"] = FieldKind.TIME
+        elif isinstance(
+            dj_field,
+            (models.ForeignKey, models.OneToOneRel, models.OneToOneField),
+        ):
+            options["kind"] = FieldKind.ID
+        elif isinstance(
+            dj_field,
+            (models.ManyToManyField, models.ManyToManyRel, models.ManyToOneRel),
+        ):
+            options["kind"] = FieldKind.ID
+            options["multiple"] = True
+        elif isinstance(dj_field, models.JSONField):
+            options["kind"] = FieldKind.JSON
+        elif PolygonField is not None and isinstance(dj_field, PolygonField):
+            options["kind"] = FieldKind.POLYGON
+        elif PointField is not None and isinstance(dj_field, PointField):
+            options["kind"] = (
+                FieldKind.GEOPOINT if dj_field.srid == 4326 else FieldKind.POINT  # type: ignore
+            )
 
     return options
 
