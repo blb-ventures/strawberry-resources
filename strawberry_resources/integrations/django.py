@@ -119,16 +119,24 @@ def get_field_options(
     )
 
     options: FieldOptions = {}
+    if (
+        relay is not None
+        and isinstance(resolved_type, type)
+        and issubclass(resolved_type, relay.GlobalID)
+    ):
+        options["kind"] = FieldKind.ID
 
-    if (dj_type := _get_django_type(origin)) is None:
-        return {}
-
-    model = dj_type.model
-    model_attr = getattr(model, field.name, None)
+    if (dj_type := _get_django_type(origin)) is not None:
+        model = dj_type.model
+        model_attr = getattr(model, field.name, None)
+    else:
+        model = None
+        model_attr = None
 
     # Try to populate options from the model property
     if (
         ModelProperty is not None
+        and model_attr is not None
         and isinstance(model_attr, ModelProperty)
         and (get_origin(annotation := model_attr.func.__annotations__.get("return")) is Annotated)
     ):
@@ -141,7 +149,7 @@ def get_field_options(
 
             options.update(opt.options)
 
-    dj_field = _get_model_field(model, field.name)
+    dj_field = _get_model_field(model, field.name) if model is not None else None
 
     if hasattr(resolved_type, "_type_definition"):
         field_obj_options: FieldObjectOptions = {}
@@ -152,7 +160,7 @@ def get_field_options(
             field_obj_options["obj_kind"] = FieldObjectKind.LIST_INPUT
 
         label = options.get("label")
-        if label is None:
+        if label is None and dj_field is not None:
             label = getattr(dj_field, "verbose_name", None)
         if label is not None:
             field_obj_options["label"] = label
@@ -160,7 +168,7 @@ def get_field_options(
         return field_obj_options
 
     if dj_field is None:
-        return {}
+        return options
 
     choices: Optional[List[FieldChoice]] = None
     default_value = v if (v := getattr(dj_field, "default", None)) is not NOT_PROVIDED else None
@@ -199,9 +207,9 @@ def get_field_options(
     if (help_text := getattr(dj_field, "help_Text", None) or None) is not None:
         options["help_text"] = help_text
 
-    if (order := dj_type.order) and order is not UNSET:
+    if dj_type and (order := dj_type.order) and order is not UNSET:
         options["orderable"] = field.name in {f.name for f in dataclasses.fields(cast(type, order))}
-    if (filters := dj_type.filters) and filters is not UNSET:
+    if dj_type and (filters := dj_type.filters) and filters is not UNSET:
         options["filterable"] = field.name in {
             f.name for f in dataclasses.fields(cast(type, filters))
         }
