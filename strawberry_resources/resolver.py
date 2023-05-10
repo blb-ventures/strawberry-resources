@@ -124,6 +124,8 @@ def resolve_fields_for_type(type_: type, *, depth: int = 0):
             is_list = is_list or isinstance(f_type, StrawberryList)
             f_type = f_type.of_type
 
+        options["multiple"] = is_list
+
         if isinstance(f_type, LazyType):
             f_type = f_type.resolve_type()
         if isinstance(f_type, EnumDefinition):
@@ -210,7 +212,12 @@ def resolve_fields_for_type(type_: type, *, depth: int = 0):
                     (True, True): FieldObjectKind.INPUT_LIST,
                     (False, True): FieldObjectKind.INPUT,
                 }
-                obj_kind = obj_kind_map[(is_list, getattr(inner_type_def, "is_input", False))]
+                obj_kind = obj_kind_map[
+                    (
+                        options.get("multiple", False),
+                        getattr(inner_type_def, "is_input", False),
+                    )
+                ]
 
             yield FieldObject(
                 name=cname,
