@@ -220,6 +220,10 @@
           {
             "label": "DISTANCE",
             "value": "DISTANCE"
+          },
+          {
+            "label": "MARKDOWN",
+            "value": "MARKDOWN"
           }
         ],
         "kind": "STRING",

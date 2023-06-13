@@ -264,6 +264,11 @@
             "group": null,
             "label": "DISTANCE",
             "value": "DISTANCE"
+          },
+          {
+            "group": null,
+            "label": "MARKDOWN",
+            "value": "MARKDOWN"
           }
         ],
         "defaultValue": null,

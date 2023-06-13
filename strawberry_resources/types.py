@@ -67,6 +67,7 @@ class FieldKind(enum.Enum):
     GEOPOINT = "geopoint"
     POLYGON = "polygon"
     DISTANCE = "distance"
+    MARKDOWN = "markdown"
 
 
 @strawberry.enum
