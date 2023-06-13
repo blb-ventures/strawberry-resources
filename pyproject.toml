@@ -51,7 +51,7 @@ pytest = "^7.1.2"
 pytest-cov = "^4.0.0"
 ipython = "^8.4.0"
 pytest-asyncio = "^0.21.0"
-ruff = "^0.0.263"
+ruff = "^0.0.272"
 pytest-django = "^4.5.2"
 
 [tool.poetry.extras]
@@ -134,8 +134,6 @@ exclude = [
   "build",
   "dist",
 ]
-
-[tool.ruff.pyupgrade]
 
 [tool.ruff.isort]
 known-first-party = ["strawberry-django-plus"]
