@@ -86,12 +86,10 @@ def to_dict(
     resource_map = get_resource_map(schema)
     data = {name: dataclasses.asdict(r) for name, r in resource_map.items()}
     remove_types = list(data) if remove_nested_types_fields else []
-    data = {
+    return {
         k: _fix_data(v, remove_nulls=remove_nulls, remove_fields_from_types=remove_types)
         for k, v in data.items()
     }
-
-    return data
 
 
 def to_json(

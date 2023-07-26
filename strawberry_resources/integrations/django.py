@@ -91,7 +91,7 @@ def _get_model_field(
 def get_extra_mappings() -> Dict[type, "FieldKind"]:
     from strawberry_resources.types import FieldKind
 
-    mappings: Dict[type, "FieldKind"] = {
+    mappings: Dict[type, FieldKind] = {
         DjangoImageType: FieldKind.IMAGE,
         DjangoFileType: FieldKind.FILE,
     }
