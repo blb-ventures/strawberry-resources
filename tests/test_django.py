@@ -1,6 +1,6 @@
 import strawberry
+import strawberry_django
 from strawberry.tools import merge_types
-from strawberry_django_plus import gql
 from typing_extensions import Annotated
 
 from strawberry_resources.queries import Query as _Query
@@ -10,26 +10,26 @@ from tests.app.models import Person, Role
 from .utils import resource_query
 
 
-@gql.django.type(Role)
+@strawberry_django.type(Role)
 class RoleType:
-    name: gql.auto
+    name: strawberry.auto
 
 
-@gql.django.type(Person)
+@strawberry_django.type(Person)
 class PersonType:
-    status: gql.auto
-    name: gql.auto
-    birthday: Annotated[gql.auto, config(label="User Birthday")]
-    age: gql.auto
+    status: strawberry.auto
+    name: strawberry.auto
+    birthday: Annotated[strawberry.auto, config(label="User Birthday")]
+    age: strawberry.auto
     role: Annotated[RoleType, config(label="Role")]
 
 
-@gql.django.input(Person)
+@strawberry_django.input(Person)
 class PersonInput:
-    status: gql.auto
-    name: gql.auto
-    birthday: Annotated[gql.auto, config(label="User Birthday")]
-    age: gql.auto
+    status: strawberry.auto
+    name: strawberry.auto
+    birthday: Annotated[strawberry.auto, config(label="User Birthday")]
+    age: strawberry.auto
 
 
 @strawberry.type
@@ -39,7 +39,7 @@ class Query:
 
 @strawberry.type
 class Mutation:
-    @gql.django.mutation
+    @strawberry_django.mutation
     def create_person(self, input: PersonInput) -> PersonType:  # noqa: A002
         ...
 

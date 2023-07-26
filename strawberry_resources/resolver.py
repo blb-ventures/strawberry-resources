@@ -5,27 +5,31 @@ from typing import (
     Dict,
     Optional,
     Tuple,
+    Type,
     TypeVar,
     cast,
 )
 
 import strawberry
 from django.db import models
-from strawberry import Schema
+from strawberry import Schema, relay
 from strawberry.custom_scalar import ScalarWrapper
 from strawberry.enum import EnumDefinition
 from strawberry.file_uploads import Upload
 from strawberry.lazy_type import LazyType
 from strawberry.scalars import JSON
-from strawberry.type import StrawberryContainer, StrawberryList, StrawberryOptional
+from strawberry.type import (
+    StrawberryContainer,
+    StrawberryList,
+    StrawberryOptional,
+    WithStrawberryObjectDefinition,
+    get_object_definition,
+)
 from strawberry.types.types import TypeDefinition
 from strawberry.utils.str_converters import to_camel_case
 from typing_extensions import Annotated, TypeAlias, get_args, get_origin
 
-from strawberry_resources.integrations.base import get_all
-from strawberry_resources.utils.inspect import get_possible_type_definitions
-from strawberry_resources.utils.pyutils import dict_merge
-
+from .integrations.base import get_all
 from .types import (
     BaseFieldValidation,
     Field,
@@ -40,6 +44,8 @@ from .types import (
     HiddenFieldError,
     Resource,
 )
+from .utils.inspect import get_possible_type_definitions
+from .utils.pyutils import dict_merge
 
 _R = TypeVar("_R")
 _T = TypeVar("_T", bound=type)
@@ -60,6 +66,7 @@ field_type_map: Dict[type, FieldKind] = {
     decimal.Decimal: FieldKind.DECIMAL,
     uuid.UUID: FieldKind.UUID,
     strawberry.ID: FieldKind.ID,
+    relay.GlobalID: FieldKind.ID,
     Upload.wrap: FieldKind.FILE,  # type: ignore
 }
 
@@ -90,14 +97,23 @@ def resolve_all(schema: Schema):
 
             yield Resource(
                 name=type_def.name,
-                fields=list(resolve_fields_for_type(type_def.origin)),
+                fields=list(
+                    resolve_fields_for_type(
+                        cast(Type[WithStrawberryObjectDefinition], type_def.origin),
+                    ),
+                ),
             )
             seen.add(type_def.name)
 
 
-def resolve_fields_for_type(type_: type, *, depth: int = 0):
-    type_def = cast(TypeDefinition, type_._type_definition)  # type: ignore
+def resolve_fields_for_type(type_: Type[WithStrawberryObjectDefinition], *, depth: int = 0):
     integrations = get_all()
+
+    type_def = get_object_definition(type_, strict=True)
+
+    annotations = {}
+    for o in reversed(type_def.origin.__mro__):
+        annotations.update(getattr(o, "__annotations__", {}))
 
     for field in type_def.fields:
         cname = field.graphql_name or to_camel_case(field.name)
@@ -167,10 +183,6 @@ def resolve_fields_for_type(type_: type, *, depth: int = 0):
 
         if (f_kind := field_type_map.get(cast(type, f_type))) is not None:
             options["kind"] = f_kind  # type: ignore
-
-        annotations = {}
-        for o in reversed(type_def.origin.__mro__):
-            annotations.update(getattr(o, "__annotations__", {}))
 
         # Override those options with the field options
         if (

@@ -1,9 +1,10 @@
 import contextlib
 import dataclasses
 import pathlib
-from typing import TYPE_CHECKING, Callable, Dict, List, NoReturn, Union
+from typing import TYPE_CHECKING, Callable, Dict, List, NoReturn, Type, Union
 
 from strawberry.field import StrawberryField
+from strawberry.type import WithStrawberryObjectDefinition
 
 if TYPE_CHECKING:
     from strawberry_resources.types import FieldKind, FieldOrFieldObjectOptions
@@ -17,7 +18,7 @@ class StrawberryResourceIntegration:
     name: str
     get_extra_mappings: Callable[[], Dict[type, "FieldKind"]]
     get_field_options: Callable[
-        [type, StrawberryField, type, bool],
+        [Type[WithStrawberryObjectDefinition], StrawberryField, type, bool],
         Union["FieldOrFieldObjectOptions", NoReturn],
     ]
     ordering: int = 0

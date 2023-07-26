@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django_choices_field import TextChoicesField
-from strawberry_django_plus import gql
+from strawberry_django.descriptors import model_property
 from typing_extensions import Annotated
 
 from strawberry_resources.types import config
@@ -43,6 +43,6 @@ class Person(models.Model):
         default=None,
     )
 
-    @gql.model_property
+    @model_property
     def age(self) -> Annotated[int, config(label="Age")]:  # pragma: nocover
         ...

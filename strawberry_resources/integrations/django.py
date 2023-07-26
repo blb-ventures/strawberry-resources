@@ -19,13 +19,17 @@ from django.db.models.fields import NOT_PROVIDED
 from strawberry import UNSET
 from strawberry.field import StrawberryField
 from strawberry.scalars import JSON
-from strawberry.type import StrawberryOptional
+from strawberry.type import (
+    StrawberryOptional,
+    WithStrawberryObjectDefinition,
+    has_object_definition,
+)
 from strawberry_django.fields.types import (
     DjangoFileType,
     DjangoImageType,
     resolve_model_field_name,
 )
-from strawberry_django.type import StrawberryDjangoType
+from strawberry_django.utils.typing import get_django_definition
 from typing_extensions import Annotated, get_args, get_origin
 
 from strawberry_resources.types import (
@@ -51,13 +55,11 @@ except ImportError:
 
 # strawberry-django-plus might not be installed
 try:
-    from strawberry_django_plus import relay
-    from strawberry_django_plus.descriptors import ModelProperty
-    from strawberry_django_plus.types import K, ListInput
+    from strawberry_django.descriptors import ModelProperty
+    from strawberry_django.fields.types import K, ListInput
 except ImportError:
     ModelProperty = None
     ListInput = None
-    relay = None
     K = None
 
 if TYPE_CHECKING:
@@ -68,10 +70,6 @@ try:
     _cache = functools.cache  # type:ignore
 except AttributeError:  # pragma:nocover
     _cache = functools.lru_cache
-
-
-def _get_django_type(type_: type) -> Optional[StrawberryDjangoType]:
-    return getattr(type_, "_django_type", None)
 
 
 @_cache
@@ -91,18 +89,14 @@ def _get_model_field(
 def get_extra_mappings() -> Dict[type, "FieldKind"]:
     from strawberry_resources.types import FieldKind
 
-    mappings: Dict[type, FieldKind] = {
+    return {
         DjangoImageType: FieldKind.IMAGE,
         DjangoFileType: FieldKind.FILE,
     }
-    if relay is not None:
-        mappings[relay.GlobalID] = FieldKind.ID
-
-    return mappings
 
 
 def get_field_options(
-    origin: type,
+    origin: Type[WithStrawberryObjectDefinition],
     field: "StrawberryField",
     resolved_type: type,
     is_list: bool,
@@ -119,14 +113,8 @@ def get_field_options(
     )
 
     options: FieldOptions = {}
-    if (
-        relay is not None
-        and isinstance(resolved_type, type)
-        and issubclass(resolved_type, relay.GlobalID)
-    ):
-        options["kind"] = FieldKind.ID
 
-    if (dj_type := _get_django_type(origin)) is not None:
+    if (dj_type := get_django_definition(origin)) is not None:
         model = dj_type.model
         model_attr = getattr(model, field.name, None)
     else:
@@ -151,7 +139,7 @@ def get_field_options(
 
     dj_field = _get_model_field(model, field.name) if model is not None else None
 
-    if hasattr(resolved_type, "_type_definition"):
+    if has_object_definition(resolved_type):
         field_obj_options: FieldObjectOptions = {}
 
         assert isinstance(resolved_type, type)
@@ -202,13 +190,9 @@ def get_field_options(
 
     if dj_type:
         if (order := dj_type.order) and order is not UNSET:
-            options["orderable"] = field.name in {
-                f.name for f in dataclasses.fields(cast(type, order))
-            }
+            options["orderable"] = field.name in {f.name for f in dataclasses.fields(order)}
         if (filters := dj_type.filters) and filters is not UNSET:
-            options["filterable"] = field.name in {
-                f.name for f in dataclasses.fields(cast(type, filters))
-            }
+            options["filterable"] = field.name in {f.name for f in dataclasses.fields(filters)}
 
     if dj_field:
         if (label := getattr(dj_field, "verbose_name", None) or None) is not None:
