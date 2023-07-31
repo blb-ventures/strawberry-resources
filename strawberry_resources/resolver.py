@@ -1,7 +1,9 @@
 import datetime
 import decimal
 import uuid
+import weakref
 from typing import (
+    Any,
     Dict,
     Optional,
     Tuple,
@@ -13,7 +15,7 @@ from typing import (
 
 import strawberry
 from django.db import models
-from strawberry import Schema, relay
+from strawberry import Schema, object_type, relay
 from strawberry.custom_scalar import ScalarWrapper
 from strawberry.enum import EnumDefinition
 from strawberry.file_uploads import Upload
@@ -70,6 +72,19 @@ field_type_map: Dict[type, FieldKind] = {
     relay.GlobalID: FieldKind.ID,
     Upload.wrap: FieldKind.FILE,  # type: ignore
 }
+
+_original_annotations: weakref.WeakKeyDictionary[type, Any] = weakref.WeakKeyDictionary()
+_original_wrap_dataclass = object_type._wrap_dataclass
+
+
+def _wrap_dataclass(cls: type):
+    _original_annotations[cls] = cls.__annotations__.copy()
+    return _original_wrap_dataclass(cls)
+
+
+# FIXME: We might be able to remove this once we fix an issue on strawberry
+# which overrides annotations when graphql_type is defined.
+object_type._wrap_dataclass = _wrap_dataclass
 
 
 def get_resource_map(schema: "Schema") -> _TypeMap:
@@ -197,11 +212,17 @@ def resolve_fields_for_type(
 
         # Override those options with the field options
         if (
-            (annotation := annotations.get(field.name)) and get_origin(annotation) is Annotated
-        ) or (
-            (resolver := getattr(type_def.origin, field.name, None))
-            and hasattr(resolver, "__annotations__")
-            and get_origin(annotation := resolver.__annotations__.get("return")) is Annotated
+            ((annotation := annotations.get(field.name)) and get_origin(annotation) is Annotated)
+            or (
+                (resolver := getattr(type_def.origin, field.name, None))
+                and hasattr(resolver, "__annotations__")
+                and get_origin(annotation := resolver.__annotations__.get("return")) is Annotated
+            )
+            or (
+                (original_annotations := _original_annotations.get(type_))
+                and (annotation := original_annotations.get(field.name))
+                and get_origin(annotation) is Annotated
+            )
         ):
             for opt in get_args(annotation)[1:]:
                 if isinstance(opt, HiddenField):
