@@ -7,6 +7,7 @@ from typing import (
     Tuple,
     Type,
     TypeVar,
+    _GenericAlias,
     cast,
 )
 
@@ -163,6 +164,9 @@ def resolve_fields_for_type(type_: Type[WithStrawberryObjectDefinition], *, dept
             f_type = f_type.wrapped_cls
         if isinstance(f_type, ScalarWrapper):
             f_type = f_type.wrap
+
+        if isinstance(f_type, _GenericAlias):
+            continue
 
         type_map = field_type_map.copy()
         for integration in integrations:
