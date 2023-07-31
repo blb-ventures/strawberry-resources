@@ -1,3 +1,4 @@
+import contextlib
 import datetime
 import decimal
 import uuid
@@ -73,12 +74,13 @@ field_type_map: Dict[type, FieldKind] = {
     Upload.wrap: FieldKind.FILE,  # type: ignore
 }
 
-_original_annotations: weakref.WeakKeyDictionary[type, Any] = weakref.WeakKeyDictionary()
+_original_annotations: Dict[type, Any] = cast(Dict[type, Any], weakref.WeakKeyDictionary())
 _original_wrap_dataclass = object_type._wrap_dataclass
 
 
 def _wrap_dataclass(cls: type):
-    _original_annotations[cls] = cls.__annotations__.copy()
+    with contextlib.suppress(AttributeError):
+        _original_annotations[cls] = cls.__annotations__.copy()
     return _original_wrap_dataclass(cls)
 
 
