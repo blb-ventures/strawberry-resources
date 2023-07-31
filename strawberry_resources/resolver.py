@@ -25,8 +25,8 @@ from strawberry.type import (
     StrawberryOptional,
     WithStrawberryObjectDefinition,
     get_object_definition,
+    has_object_definition,
 )
-from strawberry.types.types import TypeDefinition
 from strawberry.utils.str_converters import to_camel_case
 from typing_extensions import Annotated, TypeAlias, get_args, get_origin
 
@@ -53,7 +53,7 @@ _T = TypeVar("_T", bound=type)
 _M = TypeVar("_M", bound=models.Model)
 _TypeMap: TypeAlias = Dict[str, Resource]
 
-MAX_DEPTH = 5
+DEFAULT_MAX_DEPTH = 2
 type_name_map: Dict[Schema, Optional[_TypeMap]] = {}
 field_type_map: Dict[type, FieldKind] = {
     bool: FieldKind.BOOLEAN,
@@ -101,13 +101,20 @@ def resolve_all(schema: Schema):
                 fields=list(
                     resolve_fields_for_type(
                         cast(Type[WithStrawberryObjectDefinition], type_def.origin),
+                        # We are resolving all types, no need to get more deep than 2
+                        max_depth=2,
                     ),
                 ),
             )
             seen.add(type_def.name)
 
 
-def resolve_fields_for_type(type_: Type[WithStrawberryObjectDefinition], *, depth: int = 0):
+def resolve_fields_for_type(
+    type_: Type[WithStrawberryObjectDefinition],
+    *,
+    depth: int = 0,
+    max_depth: int = DEFAULT_MAX_DEPTH,
+):
     integrations = get_all()
 
     type_def = get_object_definition(type_, strict=True)
@@ -210,14 +217,11 @@ def resolve_fields_for_type(type_: Type[WithStrawberryObjectDefinition], *, dept
             continue
 
         # If this is another type, we should return a FieldObject instead
-        if "obj_kind" in options or hasattr(f_type, "_type_definition"):
-            if depth > MAX_DEPTH:
+        if "obj_kind" in options or has_object_definition(f_type):
+            if depth > max_depth:
                 continue
 
-            inner_type_def = cast(
-                TypeDefinition,
-                f_type._type_definition,  # type: ignore
-            )
+            inner_type_def = get_object_definition(f_type, strict=True)
 
             assert isinstance(f_type, type)
             obj_kind = options.get("obj_kind")
@@ -240,7 +244,7 @@ def resolve_fields_for_type(type_: Type[WithStrawberryObjectDefinition], *, dept
                 label=options.get("label", field.name),
                 obj_kind=obj_kind,
                 obj_type=inner_type_def.name,
-                fields=list(resolve_fields_for_type(f_type, depth=depth + 1)),
+                fields=list(resolve_fields_for_type(f_type, depth=depth + 1, max_depth=max_depth)),
             )
         else:
             options = cast(FieldOptions, options)
