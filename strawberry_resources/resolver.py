@@ -7,7 +7,7 @@ from typing import (
     Tuple,
     Type,
     TypeVar,
-    _GenericAlias,
+    _GenericAlias,  # type: ignore
     cast,
 )
 
