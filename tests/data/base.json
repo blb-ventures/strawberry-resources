@@ -113,7 +113,8 @@
         "label": "choices",
         "name": "choices",
         "objKind": "OBJECT_LIST",
-        "objType": "FieldChoice"
+        "objType": "FieldChoice",
+        "resource": null
       },
       "filterable": {
         "choices": null,
@@ -474,6 +475,18 @@
         "validation": {
           "required": true
         }
+      },
+      "resource": {
+        "choices": null,
+        "defaultValue": null,
+        "helpText": null,
+        "kind": "STRING",
+        "label": "resource",
+        "name": "resource",
+        "resource": null,
+        "validation": {
+          "required": false
+        }
       }
     },
     "name": "FieldObject"
@@ -539,7 +552,8 @@
         "label": "resource",
         "name": "resource",
         "objKind": "OBJECT",
-        "objType": "Resource"
+        "objType": "Resource",
+        "resource": null
       },
       "resources": {
         "fields": {
@@ -559,7 +573,8 @@
         "label": "resources",
         "name": "resources",
         "objKind": "OBJECT_LIST",
-        "objType": "Resource"
+        "objType": "Resource",
+        "resource": null
       },
       "someType": {
         "fields": {
@@ -686,7 +701,8 @@
         "label": "some_type",
         "name": "someType",
         "objKind": "OBJECT",
-        "objType": "SomeType"
+        "objType": "SomeType",
+        "resource": null
       }
     },
     "name": "Query"

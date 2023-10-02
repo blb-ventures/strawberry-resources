@@ -268,6 +268,7 @@ def resolve_fields_for_type(
                 obj_kind=obj_kind,
                 obj_type=inner_type_def.name,
                 fields=list(resolve_fields_for_type(f_type, depth=depth + 1, max_depth=max_depth)),
+                resource=options.get("resource"),
             )
         else:
             options = cast(FieldOptions, options)

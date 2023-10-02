@@ -231,6 +231,10 @@ class FieldObject:
     fields: List["ResourceField"] = strawberry.field(
         description="All subfields of this field.",
     )
+    resource: Optional[str] = strawberry.field(
+        description="The resource that this field is linked to",
+        default=None,
+    )
 
 
 ResourceField: TypeAlias = strawberry.union("ResourceField", (Field, FieldObject))  # type: ignore

@@ -334,6 +334,14 @@
         "validation": {
           "required": true
         }
+      },
+      "resource": {
+        "kind": "STRING",
+        "label": "resource",
+        "name": "resource",
+        "validation": {
+          "required": false
+        }
       }
     },
     "name": "FieldObject"
