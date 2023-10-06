@@ -9,14 +9,13 @@ from typing import (
     Optional,
     Tuple,
     Type,
-    TypeVar,
     _GenericAlias,  # type: ignore
     cast,
 )
 
 import strawberry
-from django.db import models
 from strawberry import Schema, object_type, relay
+from strawberry.annotation import StrawberryAnnotation
 from strawberry.custom_scalar import ScalarWrapper
 from strawberry.enum import EnumDefinition
 from strawberry.file_uploads import Upload
@@ -51,9 +50,6 @@ from .types import (
 from .utils.inspect import get_possible_type_definitions
 from .utils.pyutils import dict_merge
 
-_R = TypeVar("_R")
-_T = TypeVar("_T", bound=type)
-_M = TypeVar("_M", bound=models.Model)
 _TypeMap: TypeAlias = Dict[str, Resource]
 
 DEFAULT_MAX_DEPTH = 2
@@ -209,23 +205,30 @@ def resolve_fields_for_type(
                 hidden = True
                 break
 
-        if (f_kind := field_type_map.get(cast(type, f_type))) is not None:
-            options["kind"] = f_kind  # type: ignore
+        if "kind" not in options and (kind := type_map.get(cast(type, f_type))):
+            print(f_type, kind)
+            options["kind"] = kind  # type: ignore
+
+        annotation = annotations.get(field.name)
+        if isinstance(annotation, StrawberryAnnotation):
+            annotation = annotation.raw_annotation
+
+        if (
+            (annotation is None or get_origin(annotation) is not Annotated)
+            and (resolver := getattr(type_def.origin, field.name, None))
+            and hasattr(resolver, "__annotations__")
+        ):
+            annotation = resolver.__annotations__.get("return")
+        if (annotation is None or get_origin(annotation) is not Annotated) and (
+            original_annotations := _original_annotations.get(type_)
+        ):
+            annotation = original_annotations.get(field.name)
+
+        if isinstance(annotation, StrawberryAnnotation):
+            annotation = annotation.raw_annotation
 
         # Override those options with the field options
-        if (
-            ((annotation := annotations.get(field.name)) and get_origin(annotation) is Annotated)
-            or (
-                (resolver := getattr(type_def.origin, field.name, None))
-                and hasattr(resolver, "__annotations__")
-                and get_origin(annotation := resolver.__annotations__.get("return")) is Annotated
-            )
-            or (
-                (original_annotations := _original_annotations.get(type_))
-                and (annotation := original_annotations.get(field.name))
-                and get_origin(annotation) is Annotated
-            )
-        ):
+        if get_origin(annotation) is Annotated:
             for opt in get_args(annotation)[1:]:
                 if isinstance(opt, HiddenField):
                     hidden = True

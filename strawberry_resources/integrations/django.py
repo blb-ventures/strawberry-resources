@@ -239,7 +239,7 @@ def get_field_options(
             options["kind"] = FieldKind.INT
         elif isinstance(dj_field, models.BooleanField):
             options["kind"] = FieldKind.BOOLEAN
-        elif isinstance(dj_field, models.DateField):
+        elif isinstance(dj_field, models.DateTimeField):
             options["kind"] = FieldKind.DATETIME
         elif isinstance(dj_field, models.DateField):
             options["kind"] = FieldKind.DATE

@@ -10,13 +10,10 @@ from typing import (
 )
 
 import strawberry
-from django.db import models
 from strawberry.scalars import JSON
 from typing_extensions import Annotated, TypeAlias, Unpack
 
 _R = TypeVar("_R")
-_T = TypeVar("_T", bound=type)
-_M = TypeVar("_M", bound=models.Model)
 
 
 @strawberry.type
@@ -269,12 +266,10 @@ class FieldOptionsConfig:
         return hash((self.__class__, frozenset(self.options.items())))
 
 
-class HiddenFieldError(Exception):
-    ...
+class HiddenFieldError(Exception): ...
 
 
-class HiddenField:
-    ...
+class HiddenField: ...
 
 
 Hidden = Annotated[_R, HiddenField()]
