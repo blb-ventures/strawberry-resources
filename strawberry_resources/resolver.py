@@ -206,7 +206,6 @@ def resolve_fields_for_type(
                 break
 
         if "kind" not in options and (kind := type_map.get(cast(type, f_type))):
-            print(f_type, kind)
             options["kind"] = kind  # type: ignore
 
         annotation = annotations.get(field.name)

@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "strawberry-resources"
-version = "0.9.0"
+version = "0.10.0"
 description = "Introspection utilities to extract data from strawberry graphql"
 authors = ["Thiago Bellini Ribeiro <thiago@bellini.dev>"]
 license = "MIT"
