@@ -115,7 +115,10 @@ def test_query():
                     "name": "birthday",
                     "orderable": False,
                     "resource": None,
-                    "validation": {"__typename": "BaseFieldValidation", "required": False},
+                    "validation": {
+                        "__typename": "BaseFieldValidation",
+                        "required": False,
+                    },
                 },
                 {
                     "__typename": "Field",
@@ -129,7 +132,10 @@ def test_query():
                     "name": "age",
                     "orderable": False,
                     "resource": None,
-                    "validation": {"__typename": "BaseFieldValidation", "required": True},
+                    "validation": {
+                        "__typename": "BaseFieldValidation",
+                        "required": True,
+                    },
                 },
                 {
                     "__typename": "FieldObject",
@@ -223,7 +229,10 @@ def test_query_input_type():
                     "name": "birthday",
                     "orderable": False,
                     "resource": None,
-                    "validation": {"__typename": "BaseFieldValidation", "required": False},
+                    "validation": {
+                        "__typename": "BaseFieldValidation",
+                        "required": False,
+                    },
                 },
                 {
                     "__typename": "Field",
@@ -237,7 +246,10 @@ def test_query_input_type():
                     "name": "age",
                     "orderable": False,
                     "resource": None,
-                    "validation": {"__typename": "BaseFieldValidation", "required": True},
+                    "validation": {
+                        "__typename": "BaseFieldValidation",
+                        "required": True,
+                    },
                 },
             ],
             "name": "PersonInput",

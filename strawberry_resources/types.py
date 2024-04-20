@@ -149,7 +149,12 @@ class DecimalFieldValidation(IntFieldValidation):
 
 FieldValidation: TypeAlias = strawberry.union(  # type: ignore
     "FieldValidation",
-    (BaseFieldValidation, StringFieldValidation, IntFieldValidation, DecimalFieldValidation),
+    (
+        BaseFieldValidation,
+        StringFieldValidation,
+        IntFieldValidation,
+        DecimalFieldValidation,
+    ),
 )
 
 

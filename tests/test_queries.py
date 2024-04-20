@@ -67,7 +67,10 @@ def test_query():
                     "name": "idField",
                     "orderable": False,
                     "resource": None,
-                    "validation": {"__typename": "BaseFieldValidation", "required": True},
+                    "validation": {
+                        "__typename": "BaseFieldValidation",
+                        "required": True,
+                    },
                 },
                 {
                     "__typename": "Field",
@@ -81,7 +84,10 @@ def test_query():
                     "name": "strField",
                     "orderable": False,
                     "resource": None,
-                    "validation": {"__typename": "BaseFieldValidation", "required": True},
+                    "validation": {
+                        "__typename": "BaseFieldValidation",
+                        "required": True,
+                    },
                 },
                 {
                     "__typename": "Field",
@@ -95,7 +101,10 @@ def test_query():
                     "name": "intField",
                     "orderable": False,
                     "resource": None,
-                    "validation": {"__typename": "BaseFieldValidation", "required": True},
+                    "validation": {
+                        "__typename": "BaseFieldValidation",
+                        "required": True,
+                    },
                 },
                 {
                     "__typename": "Field",
@@ -109,7 +118,10 @@ def test_query():
                     "name": "floatField",
                     "orderable": False,
                     "resource": None,
-                    "validation": {"__typename": "BaseFieldValidation", "required": True},
+                    "validation": {
+                        "__typename": "BaseFieldValidation",
+                        "required": True,
+                    },
                 },
                 {
                     "__typename": "Field",
@@ -123,7 +135,10 @@ def test_query():
                     "name": "decimalField",
                     "orderable": False,
                     "resource": None,
-                    "validation": {"__typename": "BaseFieldValidation", "required": True},
+                    "validation": {
+                        "__typename": "BaseFieldValidation",
+                        "required": True,
+                    },
                 },
                 {
                     "__typename": "Field",
@@ -137,7 +152,10 @@ def test_query():
                     "name": "dateField",
                     "orderable": False,
                     "resource": None,
-                    "validation": {"__typename": "BaseFieldValidation", "required": True},
+                    "validation": {
+                        "__typename": "BaseFieldValidation",
+                        "required": True,
+                    },
                 },
                 {
                     "__typename": "Field",
@@ -151,7 +169,10 @@ def test_query():
                     "name": "datetimeField",
                     "orderable": False,
                     "resource": None,
-                    "validation": {"__typename": "BaseFieldValidation", "required": True},
+                    "validation": {
+                        "__typename": "BaseFieldValidation",
+                        "required": True,
+                    },
                 },
                 {
                     "__typename": "Field",
@@ -165,7 +186,10 @@ def test_query():
                     "name": "timeField",
                     "orderable": False,
                     "resource": None,
-                    "validation": {"__typename": "BaseFieldValidation", "required": True},
+                    "validation": {
+                        "__typename": "BaseFieldValidation",
+                        "required": True,
+                    },
                 },
                 {
                     "__typename": "Field",
@@ -182,7 +206,10 @@ def test_query():
                     "name": "someEnum",
                     "orderable": False,
                     "resource": None,
-                    "validation": {"__typename": "BaseFieldValidation", "required": True},
+                    "validation": {
+                        "__typename": "BaseFieldValidation",
+                        "required": True,
+                    },
                 },
             ],
             "name": "SomeType",
@@ -242,7 +269,10 @@ def test_query_with_annotations():
                     "name": "idField",
                     "orderable": False,
                     "resource": None,
-                    "validation": {"__typename": "BaseFieldValidation", "required": True},
+                    "validation": {
+                        "__typename": "BaseFieldValidation",
+                        "required": True,
+                    },
                 },
                 {
                     "__typename": "Field",
@@ -256,7 +286,10 @@ def test_query_with_annotations():
                     "name": "strField",
                     "orderable": False,
                     "resource": None,
-                    "validation": {"__typename": "BaseFieldValidation", "required": True},
+                    "validation": {
+                        "__typename": "BaseFieldValidation",
+                        "required": True,
+                    },
                 },
                 {
                     "__typename": "Field",
@@ -294,7 +327,10 @@ def test_query_with_annotations():
                     "name": "someEnum",
                     "orderable": False,
                     "resource": None,
-                    "validation": {"__typename": "BaseFieldValidation", "required": False},
+                    "validation": {
+                        "__typename": "BaseFieldValidation",
+                        "required": False,
+                    },
                 },
             ],
             "name": "SomeType",

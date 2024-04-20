@@ -33,7 +33,7 @@ def _fix_data(
             for k, v in data.items()
             if (
                 (not remove_nulls or v is not None)
-                and not (k in ["multiple", "filterable", "orderable"] and not v)
+                and not (k in {"multiple", "filterable", "orderable"} and not v)
             )
         }
 
@@ -87,7 +87,9 @@ def to_dict(
     data = {name: dataclasses.asdict(r) for name, r in resource_map.items()}
     remove_types = list(data) if remove_nested_types_fields else []
     return {
-        k: _fix_data(v, remove_nulls=remove_nulls, remove_fields_from_types=remove_types)
+        k: _fix_data(
+            v, remove_nulls=remove_nulls, remove_fields_from_types=remove_types
+        )
         for k, v in data.items()
     }
 

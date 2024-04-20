@@ -9,7 +9,7 @@ from typing import (
     Optional,
     Tuple,
     Type,
-    _GenericAlias,  # type: ignore
+    _GenericAlias,  # type: ignore  # noqa: PLC2701
     cast,
 )
 
@@ -70,7 +70,9 @@ field_type_map: Dict[type, FieldKind] = {
     Upload.wrap: FieldKind.FILE,  # type: ignore
 }
 
-_original_annotations: Dict[type, Any] = cast(Dict[type, Any], weakref.WeakKeyDictionary())
+_original_annotations: Dict[type, Any] = cast(
+    Dict[type, Any], weakref.WeakKeyDictionary()
+)
 _original_wrap_dataclass = object_type._wrap_dataclass
 
 
@@ -104,7 +106,7 @@ def get_resource_by_name(schema: "Schema", name: str) -> Optional[Resource]:
 def resolve_all(schema: Schema):
     seen: set[str] = set()
 
-    for _name, type_ in schema.schema_converter.type_map.items():
+    for type_ in schema.schema_converter.type_map.values():
         for type_def in get_possible_type_definitions(type_.definition):
             if type_def.name in seen:
                 continue
@@ -269,7 +271,11 @@ def resolve_fields_for_type(
                 label=options.get("label", field.name),
                 obj_kind=obj_kind,
                 obj_type=inner_type_def.name,
-                fields=list(resolve_fields_for_type(f_type, depth=depth + 1, max_depth=max_depth)),
+                fields=list(
+                    resolve_fields_for_type(
+                        f_type, depth=depth + 1, max_depth=max_depth
+                    )
+                ),
                 resource=options.get("resource"),
             )
         else:

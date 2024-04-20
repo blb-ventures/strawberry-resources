@@ -21,6 +21,7 @@ classifiers = [
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
 ]
 packages = [{ include = "strawberry_resources" }]
 include = ["strawberry_resources/py.typed"]
@@ -49,70 +50,92 @@ pytest = "^8.1.1"
 pytest-cov = "^5.0.0"
 ipython = "^8.4.0"
 pytest-asyncio = "^0.23.6"
-ruff = "^0.0.292"
+ruff = "^0.4.1"
 pytest-django = "^4.5.2"
 
 [tool.poetry.extras]
 django = ["django", "strawberry-graphql-django", "django-choices-field"]
 
 [tool.ruff]
-line-length = 100
-select = [
-  "E",
-  "F",
-  "W",
-  "I",
-  "N",
+target-version = "py38"
+preview = true
+
+[tool.ruff.lint]
+extend-select = [
+  "A",
+  "ASYNC100",
+  "ASYNC101",
+  "ASYNC102",
+  "B",
+  "BLE",
+  "C4",
+  "COM",
   "D",
-  "UP",
-  "YTT",
   "D2",
   "D3",
   "D4",
-  "BLE",
-  "B",
-  "A",
-  "COM",
-  "C4",
   "DTZ",
-  "T10",
+  "E",
+  "ERA",
   "EXE",
-  "ISC",
-  "ICN001",
+  "F",
+  "FURB",
   "G",
+  "I",
+  "ICN001",
   "INP",
+  "ISC",
+  "N",
+  "PERF",
+  "PGH",
   "PIE",
-  "T20",
-  "PYI",
+  "PL",
   "PT",
+  "PTH",
+  "PYI",
   "Q",
   "RET",
-  "SIM",
-  "TID",
-  "TCH",
-  "PTH",
-  "ERA",
-  "PGH",
-  "PL",
   "RSE",
   "RUF",
-  "TRY",
+  "SIM",
   "SLF",
+  "SLOT",
+  "T10",
+  "T20",
+  "TCH",
+  "TID",
+  "TRY",
+  "UP",
+  "W",
+  "YTT",
 ]
-ignore = [
+extend-ignore = [
   "D1",
   "D203",
   "D213",
-  "TCH001",
-  "TCH002",
-  "TCH003",
+  "D417",
+  "E203",
   "PGH003",
   "PLR09",
-  "PLR2004",
   "SLF001",
   "TRY003",
+  "PLR6301",
+  "PLC0415",
+  # ruff formatter recommends to disable those
+  "COM812",
+  "COM819",
+  "D206",
+  "E111",
+  "E114",
+  "E117",
+  "E501",
+  "ISC001",
+  "Q000",
+  "Q001",
+  "Q002",
+  "Q003",
+  "W191",
 ]
-target-version = "py38"
 exclude = [
   ".eggs",
   ".git",
@@ -127,34 +150,17 @@ exclude = [
   "dist",
 ]
 
-[tool.ruff.isort]
+[tool.ruff.lint.pylint]
+max-nested-blocks = 7
 
-[tool.black]
-line-length = 100
-target-version = ['py38', 'py39', 'py310', 'py311']
-preview = true
-exclude = '''
-/(
-    \.eggs
-  | \.git
-  | \.hg
-  | \.mypy_cache
-  | \.tox
-  | \.venv
-  | __pycached__
-  | _build
-  | buck-out
-  | build
-  | dist
-)/
-'''
+[tool.ruff.lint.isort]
+
+[tool.ruff.format]
 
 [tool.pyright]
 pythonVersion = "3.8"
 useLibraryCodeForTypes = true
-venvPath = "."
-venv = ".venv"
-ignore = ["**/migrations"]
+exclude = [".venv", "**/migrations", "dist", "docs"]
 reportCallInDefaultInitializer = "warning"
 reportMatchNotExhaustive = "warning"
 reportMissingSuperCall = "warning"

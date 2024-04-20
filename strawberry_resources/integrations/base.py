@@ -1,7 +1,7 @@
 import contextlib
 import dataclasses
 import pathlib
-from typing import TYPE_CHECKING, Callable, Dict, List, NoReturn, Type, Union
+from typing import TYPE_CHECKING, Callable, Dict, List, Type
 
 from strawberry.field import StrawberryField
 from strawberry.type import WithStrawberryObjectDefinition
@@ -19,7 +19,7 @@ class StrawberryResourceIntegration:
     get_extra_mappings: Callable[[], Dict[type, "FieldKind"]]
     get_field_options: Callable[
         [Type[WithStrawberryObjectDefinition], StrawberryField, type, bool],
-        Union["FieldOrFieldObjectOptions", NoReturn],
+        "FieldOrFieldObjectOptions",
     ]
     ordering: int = 0
 
@@ -34,7 +34,7 @@ def get_all() -> List[StrawberryResourceIntegration]:
         for module in pathlib.Path(__file__).parent.iterdir():
             if (
                 not module.is_file()
-                or module.name in ["__init__.py", "base.py"]
+                or module.name in {"__init__.py", "base.py"}
                 or not module.name.endswith(".py")
             ):
                 continue

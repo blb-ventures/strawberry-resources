@@ -5,7 +5,6 @@ from typing import (
     Any,
     Dict,
     List,
-    NoReturn,
     Optional,
     Type,
     TypeVar,
@@ -17,7 +16,6 @@ from django.core.exceptions import ImproperlyConfigured
 from django.db import models
 from django.db.models.fields import NOT_PROVIDED
 from strawberry import UNSET
-from strawberry.field import StrawberryField
 from strawberry.scalars import JSON
 from strawberry.type import (
     StrawberryOptional,
@@ -63,6 +61,8 @@ except ImportError:
     K = None
 
 if TYPE_CHECKING:
+    from strawberry.field import StrawberryField
+
     from strawberry_resources.types import FieldKind
 
 # Try to use the smaller/faster cache decorator if available
@@ -100,7 +100,7 @@ def get_field_options(
     field: "StrawberryField",
     resolved_type: type,
     is_list: bool,
-) -> Union[FieldOrFieldObjectOptions, NoReturn]:
+) -> FieldOrFieldObjectOptions:
     from strawberry_resources.types import (
         DecimalFieldValidation,
         FieldChoice,
@@ -126,7 +126,10 @@ def get_field_options(
         ModelProperty is not None
         and model_attr is not None
         and isinstance(model_attr, ModelProperty)
-        and (get_origin(annotation := model_attr.func.__annotations__.get("return")) is Annotated)
+        and (
+            get_origin(annotation := model_attr.func.__annotations__.get("return"))
+            is Annotated
+        )
     ):
         for opt in get_args(annotation)[1:]:
             if isinstance(opt, HiddenField):
@@ -157,7 +160,9 @@ def get_field_options(
 
     choices: Optional[List[FieldChoice]] = None
     default_value = (
-        v if dj_field and (v := getattr(dj_field, "default", None)) is not NOT_PROVIDED else None
+        v
+        if dj_field and (v := getattr(dj_field, "default", None)) is not NOT_PROVIDED
+        else None
     )
     if isinstance(resolved_type, type) and issubclass(resolved_type, models.Choices):
         if choices is None:
@@ -165,7 +170,9 @@ def get_field_options(
                 FieldChoice(label=lbl, value=cast(JSON, value))
                 for lbl, value in zip(resolved_type.labels, resolved_type.names)
             ]
-        default_value = resolved_type(default_value).name if default_value is not None else None
+        default_value = (
+            resolved_type(default_value).name if default_value is not None else None
+        )
     elif choices is None and dj_field and (items := getattr(dj_field, "choices", None)):
         if isinstance(items, dict):
             items = items.items()
@@ -175,7 +182,9 @@ def get_field_options(
             if isinstance(label, (list, tuple)):
                 group = value
                 for group_value, group_lbl in label:
-                    choices.append(FieldChoice(label=group_lbl, value=group_value, group=group))
+                    choices.append(
+                        FieldChoice(label=group_lbl, value=group_value, group=group)
+                    )
             else:
                 choices.append(FieldChoice(label=label, value=value))
 
@@ -190,9 +199,13 @@ def get_field_options(
 
     if dj_type:
         if (order := dj_type.order) and order is not UNSET:
-            options["orderable"] = field.name in {f.name for f in dataclasses.fields(order)}
+            options["orderable"] = field.name in {
+                f.name for f in dataclasses.fields(order)
+            }
         if (filters := dj_type.filters) and filters is not UNSET:
-            options["filterable"] = field.name in {f.name for f in dataclasses.fields(filters)}
+            options["filterable"] = field.name in {
+                f.name for f in dataclasses.fields(filters)
+            }
 
     if dj_field:
         if (label := getattr(dj_field, "verbose_name", None) or None) is not None:
@@ -209,7 +222,9 @@ def get_field_options(
             options["kind"] = FieldKind.PHONE
         elif isinstance(dj_field, models.TextField):
             options["kind"] = FieldKind.MULTILINE
-        elif isinstance(dj_field, (models.IPAddressField, models.GenericIPAddressField)):
+        elif isinstance(
+            dj_field, (models.IPAddressField, models.GenericIPAddressField)
+        ):
             options["kind"] = FieldKind.IP
         elif isinstance(dj_field, models.EmailField):
             options["kind"] = FieldKind.EMAIL
@@ -262,7 +277,9 @@ def get_field_options(
             options["kind"] = FieldKind.POLYGON
         elif PointField is not None and isinstance(dj_field, PointField):
             options["kind"] = (
-                FieldKind.GEOPOINT if dj_field.srid == 4326 else FieldKind.POINT  # type: ignore
+                FieldKind.GEOPOINT
+                if dj_field.srid == 4326  # type: ignore  # noqa: PLR2004
+                else FieldKind.POINT
             )
 
     return options
