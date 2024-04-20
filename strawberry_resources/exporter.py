@@ -66,15 +66,15 @@ def _fix_data(
 
 
 class _Encoder(json.JSONEncoder):
-    def default(self, obj: Any):
-        if isinstance(obj, decimal.Decimal):
-            return str(obj)
-        if isinstance(obj, enum.Enum):
-            return obj.name
-        if Promise is not None and isinstance(obj, Promise):
-            return str(obj)
+    def default(self, o: Any):
+        if isinstance(o, decimal.Decimal):
+            return str(o)
+        if isinstance(o, enum.Enum):
+            return o.name
+        if Promise is not None and isinstance(o, Promise):
+            return str(o)
 
-        return super().default(obj)
+        return super().default(o)
 
 
 def to_dict(

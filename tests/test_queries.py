@@ -1,10 +1,10 @@
 import datetime
 import decimal
 import enum
+from typing import Optional
 
 import strawberry
 from strawberry.tools import merge_types
-from strawberry_django.filters import Optional
 from typing_extensions import Annotated
 
 from strawberry_resources.queries import Query as _Query
