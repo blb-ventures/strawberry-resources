@@ -14,21 +14,19 @@ from typing import (
 )
 
 import strawberry
-from strawberry import Schema, object_type, relay
+from strawberry import LazyType, Schema, relay
 from strawberry.annotation import StrawberryAnnotation
-from strawberry.custom_scalar import ScalarWrapper
-from strawberry.enum import EnumDefinition
 from strawberry.file_uploads import Upload
-from strawberry.lazy_type import LazyType
 from strawberry.scalars import JSON
-from strawberry.type import (
+from strawberry.types import get_object_definition, has_object_definition, object_type
+from strawberry.types.base import (
     StrawberryContainer,
     StrawberryList,
     StrawberryOptional,
     WithStrawberryObjectDefinition,
-    get_object_definition,
-    has_object_definition,
 )
+from strawberry.types.enum import EnumDefinition
+from strawberry.types.scalar import ScalarWrapper
 from strawberry.utils.str_converters import to_camel_case
 from typing_extensions import Annotated, TypeAlias, get_args, get_origin
 
@@ -260,10 +258,8 @@ def resolve_fields_for_type(
                     (False, True): FieldObjectKind.INPUT,
                 }
                 obj_kind = obj_kind_map[
-                    (
-                        options.get("multiple", False),
-                        getattr(inner_type_def, "is_input", False),
-                    )
+                    options.get("multiple", False),
+                    getattr(inner_type_def, "is_input", False),
                 ]
 
             yield FieldObject(

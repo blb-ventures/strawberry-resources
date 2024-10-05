@@ -1,15 +1,15 @@
 import itertools
 from typing import Generator, Optional, Union
 
-from strawberry.lazy_type import LazyType
-from strawberry.type import (
+from strawberry import LazyType
+from strawberry.types import get_object_definition
+from strawberry.types.base import (
     StrawberryContainer,
+    StrawberryObjectDefinition,
     StrawberryType,
     StrawberryTypeVar,
-    get_object_definition,
 )
-from strawberry.types.types import StrawberryObjectDefinition
-from strawberry.union import StrawberryUnion
+from strawberry.types.union import StrawberryUnion
 from typing_extensions import assert_never
 
 

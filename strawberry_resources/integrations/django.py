@@ -17,11 +17,8 @@ from django.db import models
 from django.db.models.fields import NOT_PROVIDED
 from strawberry import UNSET
 from strawberry.scalars import JSON
-from strawberry.type import (
-    StrawberryOptional,
-    WithStrawberryObjectDefinition,
-    has_object_definition,
-)
+from strawberry.types import has_object_definition
+from strawberry.types.base import StrawberryOptional, WithStrawberryObjectDefinition
 from strawberry_django.fields.types import (
     DjangoFileType,
     DjangoImageType,
@@ -61,7 +58,7 @@ except ImportError:
     K = None
 
 if TYPE_CHECKING:
-    from strawberry.field import StrawberryField
+    from strawberry.types.field import StrawberryField
 
     from strawberry_resources.types import FieldKind
 

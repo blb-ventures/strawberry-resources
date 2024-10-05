@@ -3,8 +3,8 @@ import dataclasses
 import pathlib
 from typing import TYPE_CHECKING, Callable, Dict, List, Type
 
-from strawberry.field import StrawberryField
-from strawberry.type import WithStrawberryObjectDefinition
+from strawberry.types.base import WithStrawberryObjectDefinition
+from strawberry.types.field import StrawberryField
 
 if TYPE_CHECKING:
     from strawberry_resources.types import FieldKind, FieldOrFieldObjectOptions
